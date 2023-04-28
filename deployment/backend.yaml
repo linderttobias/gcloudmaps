@@ -1,12 +1,4 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:latest', '/application/backend' ]
-images:
-- 'us-west2-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/quickstart-image:tag1'
-
-
-
-steps:
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:latest', '/application/backend' ]
