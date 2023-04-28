@@ -1,0 +1,317 @@
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5em;
+  border:0.1em solid #FFFFFF;
+  border-radius:0.2em;
+  box-sizing: border-box;
+  background-color: transparent;
+  border:0.1em solid #242222;
+  color:#000000;
+  transition: all 0.2s;
+  font-family: 'Virgil';
+  z-index: 4;
+}
+
+.close-button:hover {
+  background-color: rgb(193, 193, 207);
+}
+
+
+.save__controls {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 4;
+  font-size: 12px;
+}
+
+.save__controls button {
+  margin-left: 5px;
+}
+
+
+
+path.react-flow__edge-path {
+  stroke-width: 0.7;
+  stroke: #201d1d;
+
+
+}
+
+.editContainer {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    z-index: 4;
+  }
+
+@media (max-width: 700px) {
+
+  .info-window {
+    position: absolute;
+    height: 75%;
+    top: 75px;
+    left: 10px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid black;
+    z-index: 5;
+    padding: 5px;
+  }
+
+  .info-content {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+  }
+
+  .info-text {
+    padding: 5px;
+  }
+
+  .info-image {
+    padding: 5px;
+  }
+
+  
+  .info-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .info-button {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 20px;
+    right: 10px;
+    padding: 5px;
+    height: 30px;
+    font-size: 1.5em;
+    border:0.1em solid #FFFFFF;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.2em;
+    box-sizing: border-box;
+    background-color: transparent;
+    color:#000000;
+    text-align:center;
+    transition: all 0.2s;
+    font-family: 'Virgil';
+    z-index: 4;
+  }
+
+  .about {
+    display: none;
+  }
+
+  
+
+  .scrollbar {
+    position: absolute;
+    right: 8px;
+    bottom: 18px;
+    z-index: 4;
+  }
+
+  .component {   
+    display: flex;
+    justify-content: flex-start;
+    z-index: 100;
+    font-size: 35px;
+    margin-left: 5px;
+    margin-top: 3px;
+  }
+
+  .component-2 {
+    z-index: 4;
+    display: flex;
+    font-size: 15px;
+    position:static
+  }
+
+  .superscript {
+    margin: 3px;
+    vertical-align: super;
+    font-size: 4px;
+  }
+}
+
+@media (min-width: 700px) {
+
+  .node-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35%;
+    background-color: white;
+    border:0.11em solid #242222;
+    z-index: 5;
+    padding: 5px;
+    box-shadow: 2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02), 6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028), 12.5px 12.5px 10px rgba(0, 0, 0, 0.035), 22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042), 41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05), 100px 100px 80px rgba(0, 0, 0, 0.07);
+    border-radius: 3px
+  }
+
+  .info-window {
+    position: absolute;
+    overflow: auto;
+    height: 75%;
+    top: 75px;
+    left: 5%;
+    right: 5%;
+    background-color: white;
+    border: 1.5px solid black;
+    border-radius:0.4em;
+    z-index: 5;
+    padding: 20px;
+    
+  }
+  
+  .info-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .info-text {
+    width: 35%;
+    padding: 10px;
+  }
+  
+  .info-image {
+    width: 65%;
+    padding: 10px;
+  }
+  
+  .info-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+
+  .container {
+    display: flex;
+    margin-top: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+
+
+  .component {   
+    flex: 1.3;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 50px;
+  }
+
+  .scrollbar {
+    flex:0.4;
+    background-color: bisque;
+    margin: auto;
+    align-items: center;
+    z-index: 4;
+  }
+
+  .about {
+    flex: 0.3;
+    display: flex;
+    justify-content: right;
+    align-items: right;
+  }
+
+  .info-button {
+    margin: auto;
+    font-size: 1.5em;
+    border:0.1em solid transparent;
+    border-radius:0.2em;
+    box-sizing: border-box;
+    background-color: transparent;
+    color:#000000;
+    transition: all 0.2s;
+    font-family: 'Virgil';
+    z-index: 4;
+  }
+
+  .info-button:hover {
+    background-color: rgb(193, 193, 207);
+  }
+
+  .superscript {
+    margin: 3px;
+    vertical-align: super;
+    font-size: 10px;
+  }
+
+}
+
+.updatenode__controls {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 4;
+  font-size: 12px;
+}
+
+.updatenode__controls label {
+  display: block;
+}
+
+.updatenode__bglabel {
+  margin-top: 10px;
+}
+
+.updatenode__checkboxwrapper {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+
+.updatenode__controls {
+  position: absolute;
+  right: 10px;
+  top: 40px;
+  z-index: 4;
+  font-size: 12px;
+}
+
+
+.updatenode__controls label {
+  display: block;
+}
+
+.updatenode__bglabel {
+  margin-top: 10px;
+}
+
+.updatenode__checkboxwrapper {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+
+.react-flow .react-flow__handle {
+  width: 10px;
+  height: 10px;
+  border-radius: px;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.largeInput {
+  height: 100px;
+}
