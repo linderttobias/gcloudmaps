@@ -1,0 +1,21 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:latest', '/application/backend' ]
+images:
+- 'us-west2-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/quickstart-image:tag1'
+
+
+
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:latest', '/application/backend' ]
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:latest']
+# Deploy container image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'gcloudmaps-backend', '--image', 'europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend', '--region', 'europe-west1']
+images:
+- europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend
