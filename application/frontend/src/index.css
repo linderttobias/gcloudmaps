@@ -226,27 +226,27 @@ path.react-flow__edge-path {
   }
 
   .about {
-    flex: 0.3;
     display: flex;
-    justify-content: right;
-    align-items: right;
+    align-items: center;
+    margin-left: 10px;
   }
 
   .info-button {
-    margin: auto;
-    font-size: 1.5em;
-    border:0.1em solid transparent;
-    border-radius:0.2em;
-    box-sizing: border-box;
+    align-items: center;
+    height: 38px;
+    font-size: 15px;
+    border:2px solid black;
+    border-color: black;
     background-color: transparent;
-    color:#000000;
+    border-radius: 3px;
     transition: all 0.2s;
     font-family: 'Virgil';
     z-index: 4;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 5px 20px 0px;
   }
 
   .info-button:hover {
-    background-color: rgb(193, 193, 207);
+    border-color: rgb(193, 193, 207);
   }
 
   .superscript {

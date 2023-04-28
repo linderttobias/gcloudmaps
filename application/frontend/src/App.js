@@ -365,7 +365,8 @@ const SaveRestore = () => {
                         borderBottomColor: "hsl(0deg 11.27% 3.54%)",
                         borderWidth: '2px',
                         borderRadius: '3px',
-                        boxShadow: "rgba(100, 100, 111, 0.2) 0px 5px 20px 0px"
+                        boxShadow: "rgba(100, 100, 111, 0.2) 0px 5px 20px 0px",
+                        height: 35
                       }),
                       indicatorSeparator: (baseStyles) => ({
                         ...baseStyles,
