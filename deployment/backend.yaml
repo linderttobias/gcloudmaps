@@ -11,3 +11,5 @@ steps:
   args: ['run', 'deploy', 'gcloudmaps-backend', '--image', 'europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend', '--region', 'europe-west1']
 images:
 - europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend
+options:
+  logging: CLOUD_LOGGING_ONLY
