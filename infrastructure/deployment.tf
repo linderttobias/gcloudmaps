@@ -12,7 +12,7 @@ resource "google_cloudbuild_trigger" "frontend-prod" {
     }
   }
   
-  included_files = ["application/frontend"]
+  included_files = ["application/frontend/*"]
 }
 
 resource "google_cloudbuild_trigger" "backend-prod" {
@@ -29,5 +29,5 @@ resource "google_cloudbuild_trigger" "backend-prod" {
     }
   }
   
-  included_files = ["application/backend"]
+  included_files = ["application/backend/*"]
 }
