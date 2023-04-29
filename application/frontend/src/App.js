@@ -10,7 +10,7 @@ import ReactFlow, {
   Panel
 } from 'reactflow';
 import ReactMarkdown from 'react-markdown';
-	
+import { NavLink } from "react-router-dom";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import Select from 'react-select'
 import 'reactflow/dist/style.css';
@@ -364,9 +364,9 @@ const SaveRestore = () => {
                         borderColor: "black",
                         borderBottomColor: "hsl(0deg 11.27% 3.54%)",
                         borderWidth: '2px',
-                        borderRadius: '3px',
+                        borderRadius: '4px',
                         boxShadow: "rgba(100, 100, 111, 0.2) 0px 5px 20px 0px",
-                        height: 35
+                        height: '35px'
                       }),
                       indicatorSeparator: (baseStyles) => ({
                         ...baseStyles,
@@ -384,35 +384,10 @@ const SaveRestore = () => {
                 />
           </div>
             <div className="about">
-              <button className="info-button" onClick={handleInfoClick}>About/Info</button>
+            <a class="info-button" href="/about">About</a>
             </div>
           </div>
         <div>
-
-      
-
-      {showInfo && (
-        <div className="info-window">
-              <button className="close-button" onClick={handleInfoClose}>
-              Close
-              </button>
-              <div className="info-content">
-                <div className="info-text">
-                  <h3> About Gcloudmaps:</h3>
-                  <p>more info coming soon ..
-                  </p>
-                  <h3> About Me:</h3>
-                  <p>
-                  Hey there! I'm a Cloud Data Engineer with a passion for tackling complex challenges through the power of cloud technologies. In the rare event of a global network apocalypse, you'll catch me shredding up fresh powder in the Alps, kitesurfing across my local lake, or whipping up a scrumptious eggplant lasagna for my friends to enjoy as we ride out the digital storm.
-                  </p>
-                </div>
-                <div className="info-image">
-                  <h3>Architecture:</h3>
-                  <img src="images/architecture.svg" alt="info image" />
-                </div>
-              </div>
-        </div>
-      )}
 
 
 {showNodeInfo && nodeDescription && ( 

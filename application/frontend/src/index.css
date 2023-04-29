@@ -98,6 +98,7 @@ path.react-flow__edge-path {
     padding: 5px;
     height: 30px;
     font-size: 1.5em;
+    color: black;
     border:0.1em solid #FFFFFF;
     margin:0 0.3em 0.3em 0;
     border-radius:0.2em;
@@ -232,17 +233,21 @@ path.react-flow__edge-path {
   }
 
   .info-button {
+    display: flex;
     align-items: center;
-    height: 38px;
-    font-size: 15px;
+    height: 34px;
+    font-size: 17px;
+    color: black;
     border:2px solid black;
     border-color: black;
     background-color: transparent;
-    border-radius: 3px;
-    transition: all 0.2s;
+    border-radius: 4px;
     font-family: 'Virgil';
+    padding-left: 8px;
+    padding-right: 8px;
     z-index: 4;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 5px 20px 0px;
+    text-decoration: none;
   }
 
   .info-button:hover {
