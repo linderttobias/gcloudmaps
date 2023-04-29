@@ -108,7 +108,7 @@ path.react-flow__edge-path {
     text-align:center;
     transition: all 0.2s;
     font-family: 'Virgil';
-    z-index: 4;
+    z-index: 10;
   }
 
   .about {
@@ -230,6 +230,7 @@ path.react-flow__edge-path {
     display: flex;
     align-items: center;
     margin-left: 10px;
+    z-index: 10;
   }
 
   .info-button {
@@ -245,7 +246,7 @@ path.react-flow__edge-path {
     font-family: 'Virgil';
     padding-left: 8px;
     padding-right: 8px;
-    z-index: 4;
+    z-index: 10;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 5px 20px 0px;
     text-decoration: none;
   }
