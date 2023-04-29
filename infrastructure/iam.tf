@@ -31,3 +31,38 @@ resource "google_artifact_registry_repository_iam_member" "member" {
   role       = "roles/artifactregistry.reader"
   member     = "serviceAccount:${google_service_account.umsa-cloudrun.email}"
 }
+
+
+# ForCloud Build
+# User (roles/iam.serviceAccountUser)
+#Logs Writer (roles/logging.logWriter) role
+#Artifact Registry Create-on-push Writer (roles/artifactregistry.createOnPushWriter) role 
+# act as the Runtime Service Account of your Cloud Run service.
+
+
+resource "google_service_account" "umsa-cloudbuild" {
+  account_id   = "gcloudmaps-cloudbuild-umsa"
+  display_name = "User-managed Service Account for the Cloud Build"
+}
+
+
+resource "google_service_account_iam_member" "user-account-iam" {
+  service_account_id = google_service_account.umsa-cloudrun.name
+  role               = "roles/iam.serviceAccountUser"
+  member             = "serviceAccount:${google_service_account.umsa-cloudbuild.email}"
+}
+
+
+resource "google_project_iam_member" "project" {
+  project = var.project
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${google_service_account.umsa-cloudbuild.email}"
+}
+
+resource "google_artifact_registry_repository_iam_member" "member-cloudbuild" {
+  project    = google_artifact_registry_repository.gcloudmaps.project
+  location   = google_artifact_registry_repository.gcloudmaps.location
+  repository = google_artifact_registry_repository.gcloudmaps.name
+  role       = "roles/artifactregistry.createOnPushWriter"
+  member     = "serviceAccount:${google_service_account.umsa-cloudbuild.email}"
+}
