@@ -230,7 +230,7 @@ path.react-flow__edge-path {
     display: flex;
     align-items: center;
     margin-left: 10px;
-    z-index: 9;
+    z-index: 10;
   }
 
   .info-button {
