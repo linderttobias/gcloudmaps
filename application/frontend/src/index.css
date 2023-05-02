@@ -128,7 +128,9 @@ path.react-flow__edge-path {
   }
 
   .about {
-    display: none;
+    position: absolute;
+    width: 60%;
+    bottom: 30px;
   }
 
   

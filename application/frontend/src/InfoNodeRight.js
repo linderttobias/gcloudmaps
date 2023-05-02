@@ -11,6 +11,7 @@ const InfoNodeRight = ({ data }) => {
   const linkStyle = {
     color: "rgb(42, 32, 97)",
     textDecoration: 'none',
+    whiteSpace: "nowrap",
   };
 
   // Render component
