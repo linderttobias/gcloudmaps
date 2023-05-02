@@ -196,16 +196,16 @@ path.react-flow__edge-path {
   }
   
   .info-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: top;
     width: 100%;
     height: 100%;
+    display: flex
   }
   
   .info-text {
     width: 35%;
     padding: 10px;
+    top: 5px;
+    position: relative;
   }
   
   .info-image {
