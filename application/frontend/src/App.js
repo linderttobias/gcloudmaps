@@ -381,6 +381,11 @@ const SaveRestore = () => {
                         ...baseStyles,
                         color: "hsl(0deg 11.27% 3.54%)"
                       }),
+                      singleVlaue: (baseStyles) => ({
+                        ...baseStyles,
+                        color: "black"
+                      }),
+
 
                     }}
                 />
