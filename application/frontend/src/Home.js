@@ -1,12 +1,9 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import './index.css';
+import FileComponent from './Changelog';
 
 
 const Home = () => {
-    useEffect(() => {
-        //document.body.style.overflow = "hidden";
-        //return () => (document.body.style.overflow = "scroll");
-    });
 
     return (
             <div>
@@ -22,7 +19,9 @@ const Home = () => {
         <div className="info-content">
                 <div className="info-image">
                   <h3>Architecture:</h3>
-                  <img src="images/architecture.svg" alt="info image" />
+                  <img
+      src="images/architecture.svg"
+    />
                 </div>
                 <div className="info-text">
                 <h3> About Me:</h3>

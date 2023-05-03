@@ -66,7 +66,8 @@ path.react-flow__edge-path {
     z-index: 5;
     padding: 5px;
     box-shadow: 2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02), 6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028), 12.5px 12.5px 10px rgba(0, 0, 0, 0.035), 22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042), 41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05), 100px 100px 80px rgba(0, 0, 0, 0.07);
-    border-radius: 3px
+    border-radius: 3px;
+
   }
 
 @media (max-width: 700px) {
@@ -124,7 +125,8 @@ path.react-flow__edge-path {
     text-align:center;
     transition: all 0.2s;
     font-family: 'Virgil';
-    z-index: 10;
+    z-index: 4;
+    background-color: "white";
   }
 
   .about {
@@ -191,25 +193,25 @@ path.react-flow__edge-path {
     border: 1.5px solid black;
     border-radius:0.4em;
     z-index: 5;
-    padding: 20px;
-    
+    padding: 20px;    
   }
   
   .info-content {
     width: 100%;
     height: 100%;
-    display: flex
+    display: flex;
+    margin: 10px
   }
   
   .info-text {
-    width: 35%;
+    width: 30%;
     padding: 10px;
     top: 5px;
     position: relative;
   }
   
   .info-image {
-    width: 65%;
+    width: 70%;
     padding: 10px;
   }
   
@@ -247,7 +249,8 @@ path.react-flow__edge-path {
     display: flex;
     align-items: center;
     margin-left: 10px;
-    z-index: 10;
+    z-index: 20;
+
   }
 
   .info-button {
@@ -259,13 +262,14 @@ path.react-flow__edge-path {
     border:2px solid black;
     border-color: black;
     background-color: transparent;
-    border-radius: 4px;
+    border-radius: 15px;
     font-family: 'Virgil';
     padding-left: 8px;
     padding-right: 8px;
-    z-index: 10;
+    z-index: 20;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 5px 20px 0px;
     text-decoration: none;
+    background-color: white;
   }
 
   .info-button:hover {

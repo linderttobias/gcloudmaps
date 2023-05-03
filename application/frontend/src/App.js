@@ -359,14 +359,17 @@ const SaveRestore = () => {
                       },
                     })}
                     styles={{
+                      container: (baseStyles) => ({
+                        ...baseStyles,
+                        backgroundColor: 'white'
+                      }),
                       control: (baseStyles, state) => ({
                         ...baseStyles,
                         borderColor: "black",
-                        borderBottomColor: "hsl(0deg 11.27% 3.54%)",
                         borderWidth: '2px',
-                        borderRadius: '4px',
+                        borderRadius: '12px',
                         boxShadow: "rgba(100, 100, 111, 0.2) 0px 5px 20px 0px",
-                        height: '35px'
+                        height: '35px',
                       }),
                       indicatorSeparator: (baseStyles) => ({
                         ...baseStyles,
@@ -377,7 +380,6 @@ const SaveRestore = () => {
                       dropdownIndicator: (baseStyles) => ({
                         ...baseStyles,
                         color: "hsl(0deg 11.27% 3.54%)"
-                        
                       }),
 
                     }}
@@ -436,7 +438,7 @@ const SaveRestore = () => {
       onConnect={onConnect}
       onNodeClick={onNodeClick}
       onConnectStart={onConnectStart}
-      onConnectEnd={onConnectEnd}
+      onConnectEnd={onConnectEnd}đ
       onPaneClick={onPaneClick}
       fitView
     >
