@@ -364,13 +364,15 @@ const SaveRestore = () => {
 {showNodeInfo && nodeDescription && ( 
               <div className="node-window">
                 <div className="node-window-bar">
-                <p class="large-text">{nodeName}</p>
+                <div className="large-text">{nodeName}</div>
                 <button className="close-button" onClick={handleNodeInfoClose}>x</button>
+                <a href={link} target="_blank">Official Documentation</a>
+
                 </div>
                 <div class="line-4">
   <hr/>
-</div>
-                {nodeDescription} <a href={link} target="_blank">Official Docs</a>
+                </div>
+                {nodeDescription} 
 
 
               </div>

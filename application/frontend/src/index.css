@@ -248,26 +248,25 @@ path.react-flow__edge-path {
     position: absolute;
     top: 67px;
     right: 15px;
-    width: 393px;
+    width: 389px;
     background-color: var(--bg-color);
     border: 2px solid var(--font-color);
-    padding-left: 8px;
-    padding-right: 8px;
+    padding: 10px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 5px 20px 0px;
     border-radius: 12px;
-    margin-right: 0px;
     z-index: 999;
   
   }
 
   .node-window-bar {
     display: flex;
-    justify-content: space-between;
+    margin-bottom: 3px;
+    align-items: center;
   }
 
   .large-text {
-    font-size: 24px;
-    margin: 5px
+    font-size: 18px;
+    margin-right: 10px;
   }
 
   .line-4 hr {

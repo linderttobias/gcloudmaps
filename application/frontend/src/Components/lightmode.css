@@ -24,7 +24,7 @@ label:after {
   left: 2px;
   position: absolute;
   background: var(--bg-color);
-  border-radius: 9px;
+  border-radius: 180px;
   box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
   border: 2px solid var(--font-color);
 }
