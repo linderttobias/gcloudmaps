@@ -1,27 +1,57 @@
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --primary-color: #302AE6;
+  --secondary-color: #536390;
+  --pressed-color: #dfe1e6;
+  --font-color: #141313;
+  --bg-color: #fff;
+  --heading-color: #292922;
+  --link-color: rgb(42, 32, 97);
 }
 
+[data-theme="dark"] {
+  --primary-color: #9A97F3;
+  --secondary-color: #818cab;
+  --pressed-color: #5e677e;
+  --font-color: #e1e1ff;
+  --bg-color: #161625;
+  --heading-color: #818cab;
+  --link-color: #76912b;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--font-color);
+  overflow-x: hidden;
+  font-family: 'Ubuntu'
+}
+
+a:link {
+  color: var(--link-color);
+  text-decoration: 'none';
+  white-space: "nowrap";
+}
+
+.react-flow {
+  background: var(--bg-color);
+}
 
 .close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  display:none;
   font-size: 1.5em;
-  border:0.1em solid #FFFFFF;
-  border-radius:0.2em;
-  box-sizing: border-box;
+  height: 33px;
+  width: 33px;
+  border: 2px solid var(--font-color);
+  border-radius: 12px;
   background-color: transparent;
-  border:0.1em solid #242222;
-  color:#000000;
+  color: var(--font-color);
   transition: all 0.2s;
-  font-family: 'Virgil';
   z-index: 4;
+  margin: 5px;
 }
 
 .close-button:hover {
   background-color: rgb(193, 193, 207);
+  transition: 250ms;
 }
 
 
@@ -41,9 +71,7 @@ body {
 
 path.react-flow__edge-path {
   stroke-width: 0.7;
-  stroke: #201d1d;
-
-
+  stroke: var(--font-color);
 }
 
 .editContainer {
@@ -53,24 +81,73 @@ path.react-flow__edge-path {
     z-index: 4;
   }
 
+.my-react-select-container .my-react-select__control {
+  border: 2px solid var(--font-color);
+  background-color: var(--bg-color);
+}
+
+.my-react-select-container .my-react-select__control:hover {
+  border: 2px solid var(--secondary-color);
+  transition: 250ms;
+}
 
 
-.node-window {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 35%;
-    background-color: white;
-    border:0.11em solid #242222;
-    z-index: 5;
-    padding: 5px;
-    box-shadow: 2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02), 6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028), 12.5px 12.5px 10px rgba(0, 0, 0, 0.035), 22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042), 41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05), 100px 100px 80px rgba(0, 0, 0, 0.07);
-    border-radius: 3px;
+.my-react-select-container .my-react-select__dropdown-indicator {
+  color: var(--font-color);  
+  transition: 0.0s;
 
-  }
+}
 
-@media (max-width: 700px) {
+.my-react-select-container .my-react-select__indicator-separator {
+  background-color: var(--font-color);
+  width: 2px;
+}
+
+.my-react-select-container .my-react-select__single-value {
+  color: var(--font-color);
+  transition: 0.0s;
+}
+
+.my-react-select-container .my-react-select__menu {
+  color: var(--font-color);
+  background-color: var(--bg-color);
+  border: 2px solid var(--font-color);
+}
+
+.my-react-select-container .my-react-select__option {
+  background-color: var(--bg-color);
+  color: var(--font-color);
+}
+
+
+.my-react-select-container .my-react-select__option:hover {
+  color: var(--font-color);
+  background-color: var(--pressed-color);
+}
+
+.my-react-select-container .my-react-select__option:active {
+  color: var(--link-color);
+
+}
+
+
+.react-flow__attribution {
+  background-color: var(--bg-color);
+  color: var(--font-color);
+  z-index: 0;
+}
+
+
+
+
+.link {
+  color: var(--link-color);
+  text-decoration: 'none';
+  white-space: "nowrap";
+}
+
+
+@media (max-width: 790px) {
 
   .info-window {
     position: absolute;
@@ -124,7 +201,6 @@ path.react-flow__edge-path {
     color:#000000;
     text-align:center;
     transition: all 0.2s;
-    font-family: 'Virgil';
     z-index: 4;
     background-color: "white";
   }
@@ -146,7 +222,7 @@ path.react-flow__edge-path {
   .component {   
     display: flex;
     justify-content: flex-start;
-    z-index: 100;
+    z-index: 9999;
     font-size: 35px;
     margin-left: 5px;
     margin-top: 3px;
@@ -166,21 +242,41 @@ path.react-flow__edge-path {
   }
 }
 
-@media (min-width: 700px) {
+@media (min-width: 790px) {
 
   .node-window {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 35%;
-    background-color: white;
-    border:0.11em solid #242222;
-    z-index: 5;
-    padding: 5px;
-    box-shadow: 2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02), 6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028), 12.5px 12.5px 10px rgba(0, 0, 0, 0.035), 22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042), 41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05), 100px 100px 80px rgba(0, 0, 0, 0.07);
-    border-radius: 3px
+    top: 67px;
+    right: 15px;
+    width: 393px;
+    background-color: var(--bg-color);
+    border: 2px solid var(--font-color);
+    padding-left: 8px;
+    padding-right: 8px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 5px 20px 0px;
+    border-radius: 12px;
+    margin-right: 0px;
+    z-index: 999;
+  
   }
+
+  .node-window-bar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .large-text {
+    font-size: 24px;
+    margin: 5px
+  }
+
+  .line-4 hr {
+    height: 2px;
+    border: 0;
+    background: var(--font-color);
+    margin-top: 0px
+  }
+
 
   .info-window {
     position: absolute;
@@ -238,19 +334,17 @@ path.react-flow__edge-path {
   }
 
   .scrollbar {
-    flex:0.4;
-    background-color: rgb(0, 0, 0);
     margin: auto;
     align-items: center;
     z-index: 4;
+    width: 260px;
   }
 
   .about {
     display: flex;
     align-items: center;
-    margin-left: 10px;
+    margin-left: 8px;
     z-index: 20;
-
   }
 
   .info-button {
@@ -258,22 +352,23 @@ path.react-flow__edge-path {
     align-items: center;
     height: 34px;
     font-size: 17px;
-    color: black;
+    color: var(--font-color);
     border:2px solid black;
-    border-color: black;
+    border-color: var(--font-color);
     background-color: transparent;
     border-radius: 12px;
-    font-family: 'Virgil';
     padding-left: 8px;
     padding-right: 8px;
     z-index: 20;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 5px 20px 0px;
     text-decoration: none;
-    background-color: white;
+    background-color: var(--bg-color);
+    transition: 0.0s;
   }
 
   .info-button:hover {
-    border-color: rgb(193, 193, 207);
+    border-color: var(--secondary-color);
+    transition: 250ms;
   }
 
   .superscript {
@@ -334,11 +429,35 @@ path.react-flow__edge-path {
 .react-flow .react-flow__handle {
   width: 10px;
   height: 10px;
-  border-radius: px;
+  border-radius: 0px;
   background-color: transparent;
   border-color: transparent;
 }
 
+
+.react-flow .react-flow__controls-button {
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--font-color);
+  fill: var(--font-color)
+}
+
+.react-flow .react-flow__controls-button:hover {
+  background-color: var(--secondary-color);
+  fill: var(--font-color);
+  transition: 250ms;
+}
+
+.react-flow  .react-flow__controls {
+  border-top: 1px solid var(--font-color);
+  border-left: 1px solid var(--font-color);
+  border-right: 1px solid var(--font-color);
+  border-radius: 3px
+}
+
+
 .largeInput {
   height: 100px;
 }
+
+
+

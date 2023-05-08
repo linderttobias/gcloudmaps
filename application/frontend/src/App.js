@@ -10,9 +10,9 @@ import ReactFlow, {
   Panel
 } from 'reactflow';
 import ReactMarkdown from 'react-markdown';
-import { NavLink } from "react-router-dom";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import Select from 'react-select'
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+
 import 'reactflow/dist/style.css';
 import InfoNodeMain from './InfoNodeMain';
 import InfoNodeRight from './InfoNodeRight';
@@ -20,23 +20,11 @@ import InfoNodeLeft from './InfoNodeLeft';
 import InfoNodeTop from './InfoNodeTop';
 import InfoNodeBottom from './InfoNodeBottom';
 import './index.css';
+import LightMode from './Components/LightMode';
+import Select from 'react-select'
 
 const apiUrl = process.env.REACT_APP_API_URL;
 const env = process.env.REACT_APP_ENV;
-
-
-const cssMarkdownCodeblock = `
-~~~sql
-CREATE OR REPLACE PROCEDURE mydataset.create_customer(name STRING)
-BEGIN
-DECLARE id STRING;
-SET id = GENERATE_UUID();
-INSERT INTO mydataset.customers (customer_id, name)
-  VALUES(id, name);
-SELECT FORMAT("Created customer %s (%s)", id, name);
-END
-~~~
-`;
 
 const nodeTypes = {
   infoNode_top: InfoNodeTop,
@@ -56,6 +44,8 @@ function fetchData(service) {
 }
 
 localStorage.setItem('service', 'bigquery')
+localStorage.setItem('theme', 'light');
+document.documentElement.setAttribute('data-theme', 'light');
 
 const SaveRestore = () => {
 
@@ -63,6 +53,7 @@ const SaveRestore = () => {
   var currentService = selectedOption;
   const [showInfo, setShowInfo] = useState(false);
   const [showNodeInfo, setShowNodeInfo] = useState(false);
+
 
   const handleInfoClick = () => {
     setShowInfo(!showInfo);
@@ -87,8 +78,9 @@ const SaveRestore = () => {
   // Change Service and load Nodes/Edges
   useEffect(() => {
     if (selectedOption) {
-      console.log("SELECTOR LINE 71")
       const service = selectedOption['value']
+      console.log(service)
+      console.log("hey")
       fetchData(service).then(data => {
         setNodes(data.nodes || []);
         setEdges(data.edges || []);
@@ -103,9 +95,6 @@ const SaveRestore = () => {
     { value: 'cloudstorage', label: 'Cloud Storage' },
     { value: 'cloudrun', label: 'Cloud Run' },
     { value: 'cloud-architecture', label: 'Cloud Architecture' },
-    
-    
-
   ]
   
 
@@ -264,7 +253,6 @@ const SaveRestore = () => {
     setShortDescription(node.data.shortDescription)
     setNodeExample(node.data.nodeExample)
     setShowNodeInfo(true)
-    console.log(nodeDescription)
   };
 
 
@@ -325,6 +313,7 @@ const SaveRestore = () => {
     );
   }, [link, setLink, nodeExample, setNodeExample]);
 
+
   if (env !== 'development') {
     return (
       <ReactFlow
@@ -336,7 +325,7 @@ const SaveRestore = () => {
       onPaneClick={onPaneClick}
       fitView
       >
-        <Background color="#ccc" variant="dots"/>
+<Background color="#818cab" size="0.8" variant="dots" />
         <Controls />
         <div className="container">
           <div className="component">
@@ -344,85 +333,45 @@ const SaveRestore = () => {
           </div>
           <div className="scrollbar">
                 <Select
-                    classNamePrefix="select"
+   className="my-react-select-container"
+   classNamePrefix="my-react-select"
                     defaultValue={googleServices[0]}
                     menuPlacement="auto"
                     options={googleServices}
                     onChange={handleChange}
-                    theme={(theme) => ({
-                      ...theme,
-                      colors: {
-                        ...theme.colors,
-                        primary25: 'gray',
-                        primary: 'black',
-                        primary50: 'transparent'
-                      },
-                    })}
+                   
                     styles={{
-                      container: (baseStyles) => ({
-                        ...baseStyles,
-                        backgroundColor: 'white'
-                      }),
+
                       control: (baseStyles, state) => ({
                         ...baseStyles,
-                        borderColor: "black",
                         borderWidth: '2px',
                         borderRadius: '12px',
                         boxShadow: "rgba(100, 100, 111, 0.2) 0px 5px 20px 0px",
                         height: '35px',
-                      }),
-                      indicatorSeparator: (baseStyles) => ({
-                        ...baseStyles,
-                        borderWidth: "1.4px",
-                        backgroundColor: "hsl(0deg 11.27% 3.54%)"
-                        
-                      }),
-                      dropdownIndicator: (baseStyles) => ({
-                        ...baseStyles,
-                        color: "hsl(0deg 11.27% 3.54%)"
-                      }),
-                      singleVlaue: (baseStyles) => ({
-                        ...baseStyles,
-                        color: "black"
-                      }),
-
-
+                        transition: '0s'
+                      })
                     }}
                 />
           </div>
             <div className="about">
             <a class="info-button" href="/about">About</a>
             </div>
+            <LightMode></LightMode>
           </div>
         <div>
 
 
 {showNodeInfo && nodeDescription && ( 
               <div className="node-window">
-                <button className="close-button" onClick={handleNodeInfoClose}>
-                 X
-                </button>
-                <h2>{nodeName}</h2>
+                <div className="node-window-bar">
+                <p class="large-text">{nodeName}</p>
+                <button className="close-button" onClick={handleNodeInfoClose}>x</button>
+                </div>
+                <div class="line-4">
+  <hr/>
+</div>
                 {nodeDescription} <a href={link} target="_blank">Official Docs</a>
-                <ReactMarkdown
-                  children={nodeExample}
-                  components={{
-                    code({ node, inline, className, children, ...props }) {
-                      const match = /language-(\w+)/.exec(className || "");
-                      return !inline && match ? (
-                        <SyntaxHighlighter
-                          children={String(children).replace(/\n$/, "")}
-                          language={match[1]}
-                          {...props}
-                        />
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
-                  }}
-                />
+
 
               </div>
       )}
@@ -510,11 +459,12 @@ const SaveRestore = () => {
     </div>
               {showNodeInfo && nodeDescription && ( 
               <div className="node-window">
-                <button className="close-button" onClick={handleNodeInfoClose}>
-                 X
-                </button>
+                <button className="close-button" onClick={handleNodeInfoClose}>Close</button>
                 <h2>{nodeName}</h2>
                 {nodeDescription} <a href={link} target="_blank">Official Docs</a>
+                <code>
+                  {nodeExample}
+                </code>
                 <ReactMarkdown
                   children={nodeExample}
                   components={{

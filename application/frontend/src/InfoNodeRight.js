@@ -18,7 +18,7 @@ const InfoNodeRight = ({ data }) => {
   return (
     <div onMouseEnter={() => setVisible(true)} onMouseLeave={() => setTimeout(() => setVisible(false), 500)}>
       <div style={{display: "flex"}}>
-      { data.link ? <div style={linkStyle}>{data.label}</div> : data.label}
+      { data.link ? <div className="link">{data.label}</div> : data.label}
       { data.shortDescription ? 
         <div style={{margin: "auto", width: 250}}>
           { data.shortDescription ? <div style={{fontSize: "10px", marginLeft: "5px"}}>{data.shortDescription}</div> : null}

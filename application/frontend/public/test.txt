@@ -1,0 +1,5 @@
+# Changelog
+
+01/05/2023: Split up application in dedicated frontend (react) and backend (nodejs)
+02/05/2023: Configured Multi-Regional Global Load Balancer for App infrastructure
+02/05/2023: Small Bugfixes and UI Modification
