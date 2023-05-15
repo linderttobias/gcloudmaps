@@ -356,7 +356,10 @@ const SaveRestore = () => {
             <div className="about">
             <a class="info-button" href="/about">About</a>
             </div>
-            <LightMode></LightMode>
+            <div className="lightMode">
+              <LightMode></LightMode>
+            </div>
+
           </div>
         <div>
 
