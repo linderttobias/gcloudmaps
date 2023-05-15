@@ -12,7 +12,7 @@
   --primary-color: #9A97F3;
   --secondary-color: #818cab;
   --pressed-color: #5e677e;
-  --font-color: #e1e1ff;
+  --font-color: #fff3f3;
   --bg-color: #161625;
   --heading-color: #818cab;
   --link-color: #76912b;
@@ -33,6 +33,18 @@ a {
 
 .react-flow {
   background: var(--bg-color);
+}
+
+.info {
+  height: 33px;
+  width: 33px;
+  position: relative;
+  top: 4px;
+  left: 4px;
+}
+
+svg.info path {
+  fill: var(--font-color)
 }
 
 .close-button {
@@ -158,8 +170,8 @@ path.react-flow__edge-path {
 .lightMode {
     position: absolute;
     z-index: 20;
-    right: 10px;
-    top: 7px;
+    right: 8px;
+    top: 8px;
     }
 
 
@@ -200,30 +212,22 @@ path.react-flow__edge-path {
   .info-button {
     position: absolute;
     display: flex;
-    flex-direction: column;
-    bottom: 20px;
-    right: 10px;
-    padding: 5px;
-    height: 30px;
-    font-size: 1.5em;
-    color: black;
-    border:0.1em solid #FFFFFF;
-    margin:0 0.3em 0.3em 0;
-    border-radius:0.2em;
+    bottom: 14px;
+    right: 70px;
+    border: 2px solid var(--font-color);
+    border-radius: 12px;
     box-sizing: border-box;
     background-color: transparent;
     color:#000000;
     text-align:center;
-    transition: all 0.2s;
     z-index: 4;
-    background-color: "white";
   }
 
   .about {
-    display: None
+    position: absolute;
+    bottom: 5px;
+    left: 170px;
   }
-
-  
 
   .scrollbar {
     position: absolute;

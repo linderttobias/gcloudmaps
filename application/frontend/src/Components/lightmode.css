@@ -51,6 +51,7 @@ label, label:after {
 label svg {
   position: absolute;
   width: 35px;
+  height: 35px;
   top: 5px;
   z-index: 100;
 }
@@ -58,6 +59,7 @@ label svg {
 label svg.moon {
   left:37px;
   transition: 0.3s;
+
 }
 label svg.sun {
   left:5px;
