@@ -9,7 +9,7 @@ const Home = () => {
                 <div className="component">
                     gcloud maps<sup class="superscript">by Tobias Lindert</sup>
                 </div>
-               <div className="about">
+               <div className="back">
                     <a class="info-button" href="/">Go back</a>
                </div>
             </div>
@@ -18,7 +18,7 @@ const Home = () => {
                 <div className="info-image">
                 <div>
                 <h3>About the project:</h3>
-                Embarking on my journey as Cloud Enginer to empower the Google Cloud, I started using Excalidraw to document my learning process through diagrams and notes. Realizing the potential benefit for others, I transformed my personal sketches into an accessible, collaborative project that serves as a visual guide for Google Cloud learners. This page is about Google Cloud and also created with Google Cloud. If you can read this, then the Google Cloud Run, Load Balancer, Cloud Run CI/CD Pipelines and all the other services and resources used for powering up this page. The Frontend has been created with React (React-Flow) and NodeJS.
+                Embarking on my journey as Cloud Enginer to empower the Google Cloud, I started using Excalidraw to document my learning process through diagrams and notes. Realizing the potential benefit for others, I transformed my personal sketches into an accessible, collaborative project that serves as a visual guide for Google Cloud learners. This page is about Google Cloud and created with Google Cloud. The Frontend has been created with React (React-Flow) and NodeJS.
 
 Committed to keeping the content up-to-date, I regularly update the project with new information and insights on Google Cloud technologies. I also plan to Open Source the Project as an ready to deploy example for interested people.
                 </div>
