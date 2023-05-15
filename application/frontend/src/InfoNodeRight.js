@@ -8,17 +8,11 @@ const InfoNodeRight = ({ data }) => {
   // State hook for visibility control
   const [isVisible, setVisible] = useState(false);
 
-  const linkStyle = {
-    color: "rgb(42, 32, 97)",
-    textDecoration: 'none',
-    whiteSpace: "nowrap",
-  };
-
   // Render component
   return (
     <div onMouseEnter={() => setVisible(true)} onMouseLeave={() => setTimeout(() => setVisible(false), 500)}>
       <div style={{display: "flex"}}>
-      { data.link ? <div className="link">{data.label}</div> : data.label}
+      { data.description ? <div className="link">{data.label}</div> : data.label}
       { data.shortDescription ? 
         <div style={{margin: "auto", width: 250}}>
           { data.shortDescription ? <div style={{fontSize: "10px", marginLeft: "5px"}}>{data.shortDescription}</div> : null}

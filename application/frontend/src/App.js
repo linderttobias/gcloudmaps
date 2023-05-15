@@ -329,7 +329,7 @@ const SaveRestore = () => {
         <Controls />
         <div className="container">
           <div className="component">
-            gcloud maps<sup class="superscript">by Tobias Lindert</sup>
+            gcloudmaps<sup class="superscript">by Tobias Lindert</sup>
           </div>
           <div className="scrollbar">
                 <Select
@@ -366,7 +366,7 @@ const SaveRestore = () => {
                 <div className="node-window-bar">
                 <div className="large-text">{nodeName}</div>
                 <button className="close-button" onClick={handleNodeInfoClose}>x</button>
-                <a href={link} target="_blank">Official Documentation</a>
+                { link ? <a href={link} target="_blank">Official Documentation</a> : '' }
 
                 </div>
                 <div class="line-4">
@@ -412,7 +412,7 @@ const SaveRestore = () => {
 
     <div className="container">
       <div className="component">
-        gcloud maps<sup class="superscript">by Tobias Lindert</sup>
+        gcloudmaps<sup class="superscript">by Tobias Lindert</sup>
       </div>
     </div>
     <div className="editContainer">
