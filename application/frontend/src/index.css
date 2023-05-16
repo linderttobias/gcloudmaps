@@ -175,7 +175,7 @@ path.react-flow__edge-path {
 }
 
 
-@media (max-width: 790px) {
+@media (max-width: 740px) {
 
 .lightMode {
     position: absolute;
@@ -274,13 +274,13 @@ path.react-flow__edge-path {
   }
 }
 
-@media (min-width: 790px) {
+@media (min-width: 740px) {
 
   .node-window {
     position: absolute;
     top: 67px;
     right: 15px;
-    width: 389px;
+    width: 375px;
     background-color: var(--bg-color);
     border: 2px solid var(--font-color);
     padding: 10px;

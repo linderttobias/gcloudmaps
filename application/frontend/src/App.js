@@ -339,6 +339,7 @@ const SaveRestore = () => {
                     menuPlacement="auto"
                     options={googleServices}
                     onChange={handleChange}
+                    isSearchable={ false }
                    
                     styles={{
 
