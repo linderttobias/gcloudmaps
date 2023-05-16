@@ -1,16 +1,13 @@
 // Import required libraries
 import { memo, useState } from "react";
-import { Handle, Position, NodeToolbar } from "reactflow";
-import ReactMarkdown from 'react-markdown';
+import { Handle, Position } from "reactflow";
+import './index.css';
 
 // InfoNodeRight component definition
 const InfoNodeRight = ({ data }) => {
-  // State hook for visibility control
-  const [isVisible, setVisible] = useState(false);
-
   // Render component
   return (
-    <div onMouseEnter={() => setVisible(true)} onMouseLeave={() => setTimeout(() => setVisible(false), 500)}>
+    <div>
       <div style={{display: "flex"}}>
       { data.description ? <div className="link">{data.label}</div> : data.label}
       { data.shortDescription ? 
