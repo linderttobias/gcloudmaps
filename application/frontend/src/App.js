@@ -333,8 +333,8 @@ const SaveRestore = () => {
           </div>
           <div className="scrollbar">
                 <Select
-   className="my-react-select-container"
-   classNamePrefix="my-react-select"
+                  className="my-react-select-container"
+                  classNamePrefix="my-react-select"
                     defaultValue={googleServices[0]}
                     menuPlacement="auto"
                     options={googleServices}
@@ -355,18 +355,17 @@ const SaveRestore = () => {
                 />
           </div>
             <div className="about">
-            <a class="info-button" href="/about">
-              <svg version="1.0" class="info" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 7C12.5523 7 13 7.44772 13 8V13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13V8C11 7.44772 11.4477 7 12 7Z" fill="#000000"/>
-              <path d="M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z" fill="#000000"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12Z" fill="#000000"/>
-</svg>
-            </a>
+              <a class="info-button" href="/about">
+                <svg version="1.0" class="info" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 7C12.5523 7 13 7.44772 13 8V13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13V8C11 7.44772 11.4477 7 12 7Z" fill="#000000"/>
+                  <path d="M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z" fill="#000000"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12Z" fill="#000000"/>
+                </svg>
+              </a>
             </div>
             <div className="lightMode">
               <LightMode/>
             </div>
-
           </div>
         <div>
 
@@ -410,21 +409,48 @@ const SaveRestore = () => {
     >
     <Background color="#ccc" variant="dots"/>
     <Controls />
-    <Panel position="top-right">
-      <Select
-              className="basic-single"
-              classNamePrefix="select"
-              defaultValue={googleServices[0]}
-              options={googleServices}
-              onChange={handleChange}
-            />
-    </Panel>
-
     <div className="container">
-      <div className="component">
-        gcloudmaps<sup class="superscript">by Tobias Lindert</sup>
-      </div>
-    </div>
+          <div className="component">
+            gcloudmaps<sup class="superscript">by Tobias Lindert</sup>
+          </div>
+          <div className="scrollbar">
+                <Select
+                  className="my-react-select-container"
+                  classNamePrefix="my-react-select"
+                    defaultValue={googleServices[0]}
+                    menuPlacement="auto"
+                    options={googleServices}
+                    onChange={handleChange}
+                    isSearchable={ false }
+                   
+                    styles={{
+
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderWidth: '2px',
+                        borderRadius: '12px',
+                        boxShadow: "rgba(100, 100, 111, 0.2) 0px 5px 20px 0px",
+                        height: '35px',
+                        transition: '0s'
+                      })
+                    }}
+                />
+          </div>
+            <div className="about">
+              <a class="info-button" href="/about">
+                <svg version="1.0" class="info" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 7C12.5523 7 13 7.44772 13 8V13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13V8C11 7.44772 11.4477 7 12 7Z" fill="#000000"/>
+                  <path d="M12 17C12.5523 17 13 16.5523 13 16C13 15.4477 12.5523 15 12 15C11.4477 15 11 15.4477 11 16C11 16.5523 11.4477 17 12 17Z" fill="#000000"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12Z" fill="#000000"/>
+                </svg>
+              </a>
+            </div>
+            <div className="lightMode">
+              <LightMode/>
+            </div>
+          </div>
+        <div></div>
+
     <div className="editContainer">
           <div className="save__controls">
             <button onClick={onSave}>save</button>
@@ -433,72 +459,56 @@ const SaveRestore = () => {
           </div>
 
           <div className="updatenode__controls">
-            <label>Node Name:</label>
+            <text>Node Name:</text>
             <input
               value={nodeName}
               onChange={(evt) => setNodeName(evt.target.value)}
+              style={{width: "250px"}}
             />
-            <label>Node Description:</label>
+            <text>Node Description:</text>
             <textarea
               value={nodeDescription}
               onChange={(evt) => setNodeDescription(evt.target.value)}
               placeholder="Type here with line breaks..."
               rows={15}
-              cols={20}
+              cols={30}
             />
-            <label>Link:</label>
+            <text>Link:</text>
             <input
               value={link}
               onChange={(evt) => setLink(evt.target.value)}
+              style={{width: "250px"}}
             />
-            <label>Short Description:</label>
+            <text>Short Description:</text>
             <textarea
               value={shortDescription}
               onChange={(evt) => setShortDescription(evt.target.value)}
               placeholder="..."
               rows={2}
-              cols={20}
-            />
-            <label>Example:</label>
-            <textarea
-              value={nodeExample}
-              onChange={(evt) => setNodeExample(evt.target.value)}
-              placeholder="..."
-              rows={3}
-              cols={10}
+              cols={30}
             />
           </div>
     </div>
-              {showNodeInfo && nodeDescription && ( 
+    <div>
+
+
+{showNodeInfo && nodeDescription && ( 
               <div className="node-window">
-                <button className="close-button" onClick={handleNodeInfoClose}>Close</button>
-                <h2>{nodeName}</h2>
-                {nodeDescription} <a href={link} target="_blank">Official Docs</a>
-                <code>
-                  {nodeExample}
-                </code>
-                <ReactMarkdown
-                  children={nodeExample}
-                  components={{
-                    code({ node, inline, className, children, ...props }) {
-                      const match = /language-(\w+)/.exec(className || "");
-                      return !inline && match ? (
-                        <SyntaxHighlighter
-                          children={String(children).replace(/\n$/, "")}
-                          language={match[1]}
-                          {...props}
-                        />
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
-                  }}
-                />
+                <div className="node-window-bar">
+                <div className="large-text">{nodeName}</div>
+                <button className="close-button" onClick={handleNodeInfoClose}>x</button>
+                { link ? <a href={link} target="_blank">Official Documentation</a> : '' }
+
+                </div>
+                <div class="line-4">
+  <hr/>
+                </div>
+                {nodeDescription} 
+
 
               </div>
       )}
+    </div>
     </ReactFlow>
     
   );

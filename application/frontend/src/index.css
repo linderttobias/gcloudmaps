@@ -102,9 +102,12 @@ path.react-flow__edge-path {
 
 .editContainer {
     position: absolute;
-    top: 50%;
+    bottom: 5px;
     right: 5px;
     z-index: 4;
+    height: 450px;
+    width: 250px;
+    
   }
 
 .my-react-select-container .my-react-select__control {
