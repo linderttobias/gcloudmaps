@@ -9,7 +9,7 @@ const InfoNodeRight = ({ data }) => {
   return (
     <div>
       <div style={{display: "flex"}}>
-      { data.description ? <div className="link">{data.label}</div> : data.label}
+      { data.link ? <a href={data.link} target="_blank">{data.label}</a> : data.label}
       { data.shortDescription ? 
         <div style={{margin: "auto", width: 250}}>
           { data.shortDescription ? <div style={{fontSize: "10px", marginLeft: "5px"}}>{data.shortDescription}</div> : null}
