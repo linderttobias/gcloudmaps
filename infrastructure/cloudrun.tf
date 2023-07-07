@@ -1,5 +1,5 @@
 resource "google_artifact_registry_repository" "gcloudmaps" {
-  location      = var.region
+  location      = var.region_eu
   repository_id = "gcloudmaps"
   description   = "Repository for Docker Image for gcloudmaps"
   format        = "DOCKER"
@@ -10,7 +10,7 @@ resource "google_artifact_registry_repository" "gcloudmaps" {
 
 resource "google_cloud_run_v2_service" "frontend" {
   name     = "gcloudmaps-frontend"
-  location = var.region
+  location = var.region_eu
   ingress  = "INGRESS_TRAFFIC_ALL"
 
 
@@ -37,7 +37,7 @@ resource "google_cloud_run_v2_service" "frontend" {
 
 resource "google_cloud_run_v2_service" "backend" {
   name     = "gcloudmaps-backend"
-  location = var.region
+  location = var.region_eu
   ingress  = "INGRESS_TRAFFIC_ALL"
 
 

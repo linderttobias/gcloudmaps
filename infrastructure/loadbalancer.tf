@@ -52,7 +52,7 @@ resource "google_compute_global_forwarding_rule" "default" {
 resource "google_compute_region_network_endpoint_group" "cloudrun_neg" {
   name                  = "cloudrun-neg"
   network_endpoint_type = "SERVERLESS"
-  region                = var.region
+  region                = var.region_eu
   cloud_run {
     service = google_cloud_run_v2_service.frontend.name
   }

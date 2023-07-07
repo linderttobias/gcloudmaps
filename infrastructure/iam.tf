@@ -69,7 +69,7 @@ resource "google_artifact_registry_repository_iam_member" "member-cloudbuild" {
 
 
 resource "google_cloud_run_service_iam_member" "member-frontend" {
-  location = var.region
+  location = var.region_eu
   project = var.project
   service = google_cloud_run_v2_service.frontend.name
   role = "roles/run.admin"
@@ -77,7 +77,7 @@ resource "google_cloud_run_service_iam_member" "member-frontend" {
 }
 
 resource "google_cloud_run_service_iam_member" "member-backend" {
-  location = var.region
+  location = var.region_eu
   project = var.project
   service = google_cloud_run_v2_service.backend.name
   role = "roles/run.admin"
