@@ -27,8 +27,9 @@ body {
 
 a {
   color: var(--link-color);
-  text-decoration: 'none';
+  text-decoration: none;
   white-space: "nowrap";
+
 }
 
 .react-flow {
@@ -105,7 +106,7 @@ path.react-flow__edge-path {
     bottom: 5px;
     right: 5px;
     z-index: 4;
-    height: 450px;
+    height: 200px;
     width: 250px;
     
   }

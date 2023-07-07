@@ -115,7 +115,6 @@ const SaveRestore = () => {
 
   const [nodeExample, setNodeExample] = useState(null)
   const [shortDescription, setShortDescription] = useState("unknown")
-  const [nodeDescription, setNodeDescription] = useState("Unknown")
   const [link, setLink] = useState(null)
   const [nodeName, setNodeName] = useState("Node1");
   const [nodeId, setNodeId] = useState("1");
@@ -234,7 +233,7 @@ const SaveRestore = () => {
   const onAdd = useCallback(() => {
     const newNode = {
       id: getNodeId(),
-      data: { label: 'Added node', description: "unknown" },
+      data: { label: 'Added node'},
       type: 'infoNode_main',
       position: {
         x: window.innerWidth/2,
@@ -248,7 +247,6 @@ const SaveRestore = () => {
 
     setNodeId(node.id);
     setNodeName(node.data.label);
-    setNodeDescription(node.data.description)
     setLink(node.data.link)
     setShortDescription(node.data.shortDescription)
     setNodeExample(node.data.nodeExample)
@@ -285,7 +283,6 @@ const SaveRestore = () => {
           // in order to notify react flow about the change
           node.data = {
             ...node.data,
-            description: nodeDescription,
             shortDescription: shortDescription
           };
         }
@@ -293,7 +290,7 @@ const SaveRestore = () => {
         return node;
       })
     );
-  }, [nodeDescription, setNodeDescription, shortDescription, setShortDescription]);
+  }, [shortDescription, setShortDescription]);
 
   useEffect(() => {
     setNodes((nds) =>
@@ -367,26 +364,6 @@ const SaveRestore = () => {
               <LightMode/>
             </div>
           </div>
-        <div>
-
-
-{showNodeInfo && nodeDescription && ( 
-              <div className="node-window">
-                <div className="node-window-bar">
-                <div className="large-text">{nodeName}</div>
-                <button className="close-button" onClick={handleNodeInfoClose}>x</button>
-                { link ? <a href={link} target="_blank">Official Documentation</a> : '' }
-
-                </div>
-                <div class="line-4">
-  <hr/>
-                </div>
-                {nodeDescription} 
-
-
-              </div>
-      )}
-    </div>
       </ReactFlow>
     )
   }
@@ -465,14 +442,6 @@ const SaveRestore = () => {
               onChange={(evt) => setNodeName(evt.target.value)}
               style={{width: "250px"}}
             />
-            <text>Node Description:</text>
-            <textarea
-              value={nodeDescription}
-              onChange={(evt) => setNodeDescription(evt.target.value)}
-              placeholder="Type here with line breaks..."
-              rows={15}
-              cols={30}
-            />
             <text>Link:</text>
             <input
               value={link}
@@ -488,26 +457,6 @@ const SaveRestore = () => {
               cols={30}
             />
           </div>
-    </div>
-    <div>
-
-
-{showNodeInfo && nodeDescription && ( 
-              <div className="node-window">
-                <div className="node-window-bar">
-                <div className="large-text">{nodeName}</div>
-                <button className="close-button" onClick={handleNodeInfoClose}>x</button>
-                { link ? <a href={link} target="_blank">Official Documentation</a> : '' }
-
-                </div>
-                <div class="line-4">
-  <hr/>
-                </div>
-                {nodeDescription} 
-
-
-              </div>
-      )}
     </div>
     </ReactFlow>
     

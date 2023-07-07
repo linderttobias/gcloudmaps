@@ -13,7 +13,7 @@ const InfoNodeLeft = ({ data }) => {
         <div style={{margin: "auto", maxWidth: "250px"}}>
           { data.shortDescription ? <div style={{fontSize: "10px", marginRight: "5px"}}>{data.shortDescription}</div> : null}
         </div> : null}
-        { data.description ? <div className="link">{data.label}</div> : data.label}
+        { data.link ? <a href={data.link} target="_blank">{data.label}</a> : data.label}
       </div> 
       <Handle type="source" position={Position.Left} id="left"/>
       <Handle type="target" position={Position.Right} id="right" />

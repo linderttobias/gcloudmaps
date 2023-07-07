@@ -10,7 +10,7 @@ const InfoNodeBottom = ({ data }) => {
     <div>
       <div style={{justifyContent: "center"}}>
         <div style={{justifyContent: "center", display: "flex"}}>
-      { data.description ? <div className="link">{data.label}</div> : data.label}
+        { data.link ? <a href={data.link} target="_blank">{data.label}</a> : data.label}
       </div>
       { data.shortDescription ? 
         <div style={{margin: "auto", maxWidth: "150px"}}>

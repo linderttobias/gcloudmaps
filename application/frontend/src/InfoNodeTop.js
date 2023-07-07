@@ -15,7 +15,7 @@ const InfoNodeTop = ({ data }) => {
           { data.shortDescription ? <div style={{fontSize: "10px", marginTop: "5px"}}>{data.shortDescription}</div> : null}
         </div> : null}
         <div style={{justifyContent: "center", display: "flex"}}>
-      { data.description ? <div className="link">{data.label}</div> : data.label}
+        { data.link ? <a href={data.link} target="_blank">{data.label}</a> : data.label}
       </div>
       </div> 
       <Handle type="source" position={Position.Left} id="left"/>
