@@ -1,0 +1,13 @@
+on:
+  pull_request:
+    branches:
+    - main
+  workflow_dispatch:
+  
+jobs:
+  runscript:
+    name: Example
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test a shell
+        run:  becho "hello world"
