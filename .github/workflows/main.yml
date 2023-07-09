@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test a shell
-        run:  becho "hello world"
+        run:  echo "hello world"
