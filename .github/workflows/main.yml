@@ -10,4 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test a shell
-        run:  echo "hello world"
+        run:  |
+          links=$(jq -r '.nodes[].data.link' "application/backend/data/bigquery.json")
+          filtered_links=()
+
+          for link in $(echo "${links[@]}"); do
+              if [[ "$link" == https://* ]]; then
+                  filtered_links+=("$link")
+              fi
+          done
+
+          for link in "${filtered_links[@]}"; do
+              http_status=$(curl -s -o /dev/null -w "%{http_code}" $link)
+              echo "$link"
+              echo "$http_status"
+          done
