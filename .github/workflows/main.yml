@@ -9,7 +9,9 @@ jobs:
     name: Example
     runs-on: ubuntu-latest
     steps:
-      - name: Test a shell
+      - name: checkout Repository
+        uses: actions/checkout@v2.3.4
+      - name: Check validity of links
         run:  |
           links=$(jq -r '.nodes[].data.link' "application/backend/data/bigquery.json")
           filtered_links=()
