@@ -54,6 +54,20 @@ const SaveRestore = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [showNodeInfo, setShowNodeInfo] = useState(false);
 
+  const googleServices = [
+    { value: 'bigquery', label: 'BigQuery' },
+    { value: 'cloudstorage', label: 'Cloud Storage' },
+    { value: 'cloudrun', label: 'Cloud Run' },
+    { value: 'cloud-architecture', label: 'Cloud Architecture' },
+  ]
+  
+
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
+  const [rfInstance, setRfInstance] = useState(null);
+  const { setViewport } = useReactFlow();
+
 
   const handleInfoClick = () => {
     setShowInfo(!showInfo);
@@ -79,32 +93,26 @@ const SaveRestore = () => {
   useEffect(() => {
     if (selectedOption) {
       const service = selectedOption['value']
-      console.log(service)
-      console.log("hey")
       fetchData(service).then(data => {
         setNodes(data.nodes || []);
         setEdges(data.edges || []);
       });
     }
 
-  }, [selectedOption]);
+    // Sets View once new services is loaded
+    if (rfInstance) {
+      // Timeout required to wait for nodes/edges being loaded
+      setTimeout(() => {
+        rfInstance.fitView();
+      }, 50);
+    }
+
+  }, [selectedOption, rfInstance]);
 
 
-  const googleServices = [
-    { value: 'bigquery', label: 'BigQuery' },
-    { value: 'cloudstorage', label: 'Cloud Storage' },
-    { value: 'cloudrun', label: 'Cloud Run' },
-    { value: 'cloud-architecture', label: 'Cloud Architecture' },
-  ]
-  
-
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
-  const [rfInstance, setRfInstance] = useState(null);
-  const { setViewport } = useReactFlow();
 
 
+  // Initial Load
   useEffect(() => {
     const service = localStorage.getItem("service")
     fetchData(service).then(data => {
