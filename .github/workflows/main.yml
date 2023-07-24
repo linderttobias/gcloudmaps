@@ -6,7 +6,7 @@ on:
   
 jobs:
   runscript:
-    name: Example
+    name: Check urls for validity
     runs-on: ubuntu-latest
     steps:
       - name: checkout Repository
