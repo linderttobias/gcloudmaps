@@ -8,9 +8,13 @@ require('dotenv').config();
 const env = process.env.ENVIRONMENT; //dev, test, prod
  
 const app = express();
+
+app.use(express.json({limit: "500kb", extended: true}))
+app.use(express.urlencoded({limit: "500kb", extended: true}))
  
 app.use(cors());
 app.use(bodyParser.json());
+
 
 app.post('/save',(req, res) => {
     const data = JSON.stringify(req.body)
