@@ -329,7 +329,6 @@ const SaveRestore = () => {
       nodesDraggable={false}
       nodesConnectable={false}
       nodesFocusable={false}
-      elementsSelectable={false}
       nodes={nodes}
       edges={edges}
       nodeTypes={nodeTypes}
