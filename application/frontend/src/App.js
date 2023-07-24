@@ -59,6 +59,8 @@ const SaveRestore = () => {
     { value: 'cloudstorage', label: 'Cloud Storage' },
     { value: 'cloudrun', label: 'Cloud Run' },
     { value: 'cloud-architecture', label: 'Cloud Architecture' },
+    { value: 'more-coming-soon', label: 'More coming soon ...' },
+
   ]
   
 
@@ -104,7 +106,7 @@ const SaveRestore = () => {
       // Timeout required to wait for nodes/edges being loaded
       setTimeout(() => {
         rfInstance.fitView();
-      }, 50);
+      }, 150);
     }
 
   }, [selectedOption, rfInstance]);
