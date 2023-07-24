@@ -324,12 +324,16 @@ const SaveRestore = () => {
   if (env !== 'development') {
     return (
       <ReactFlow
+      edgesUpdatable={false}
+      edgesFocusable={false}
+      nodesDraggable={false}
+      nodesConnectable={false}
+      nodesFocusable={false}
+      elementsSelectable={false}
       nodes={nodes}
       edges={edges}
       nodeTypes={nodeTypes}
       onInit={setRfInstance}
-      onNodeClick={onNodeClick}
-      onPaneClick={onPaneClick}
       fitView
       >
 <Background color="#818cab" size="0.8" variant="dots" />
@@ -390,7 +394,7 @@ const SaveRestore = () => {
       onConnect={onConnect}
       onNodeClick={onNodeClick}
       onConnectStart={onConnectStart}
-      onConnectEnd={onConnectEnd}đ
+      onConnectEnd={onConnectEnd}
       onPaneClick={onPaneClick}
       fitView
     >
