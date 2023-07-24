@@ -57,29 +57,31 @@ label svg {
 }
 
 label svg.moon {
-  left:37px;
+
+
+  left:5px;
+  height: 23px;
+  width: 23px;
   transition: 0.3s;
 
 }
 label svg.sun {
-  left:5px;
-  height: 27px;
-  width: 27spx;
+  left:37px;
   transition: 0.3s;
 }
 
 label svg.sun path {
-  fill: rgb(0, 0, 0);
+  fill: rgb(255, 255, 255);
 }
 
 label svg.moon path {
-  fill: rgb(0, 0, 0);
+  fill: rgb(255, 255, 255);
 }
 
 
 .inputToggle:checked + label svg.sun path{
-  fill:#ffffff;
+  fill:#000000;
 }
 .inputToggle:checked + label svg.moon path{
-  fill:#ffffff;
+  fill:#000000;
 }
