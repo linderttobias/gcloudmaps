@@ -34,7 +34,7 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1.0.0'
         with:
-          workload_identity_provider: 'projects/32549352397/locations/global/workloadIdentityPools/github-actions/providers/github'
+          workload_identity_provider: 'projects/707432047927/locations/global/workloadIdentityPools/github-actions/providers/github'
           service_account: 'tf-apply@gcloudmaps.iam.gserviceaccount.com'
 
       - uses: hashicorp/setup-terraform@v2
