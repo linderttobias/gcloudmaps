@@ -1,5 +1,5 @@
 resource "google_cloudbuild_trigger" "frontend-prod" {
-  location = var.region_eu
+  location = var.region
   name     = "build-deploy-frontend-gcloudmaps-prod"
   service_account = google_service_account.umsa-cloudbuild.id
   filename = "deployment/frontend.yaml"
@@ -16,7 +16,7 @@ resource "google_cloudbuild_trigger" "frontend-prod" {
 }
 
 resource "google_cloudbuild_trigger" "backend-prod" {
-  location = var.region_eu
+  location = var.region
   name     = "build-deploy-backend-gcloudmaps-prod"
   service_account = google_service_account.umsa-cloudbuild.id
   filename = "deployment/backend.yaml"
