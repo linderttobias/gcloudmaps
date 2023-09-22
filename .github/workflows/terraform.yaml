@@ -39,7 +39,7 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.4.0
+          terraform_version: 1.4.5
 
       - id: fmt
         name: Terraform fmt
@@ -49,7 +49,7 @@ jobs:
       - id: init
         name: Terraform Init
         working-directory: infrastructure
-        run: terraform init -input=false -backend-config="prefix=terraform-demo" -backend-config="bucket=tf-state-storage-2023"
+        run: terraform init -input=false"
 
       - id: validate
         name: Terraform Validate
