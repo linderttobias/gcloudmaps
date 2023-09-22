@@ -37,7 +37,7 @@ jobs:
           workload_identity_provider: 'projects/707432047927/locations/global/workloadIdentityPools/github-actions/providers/github'
           service_account: 'tf-apply@gcloudmaps.iam.gserviceaccount.com'
 
-      - uses: hashicorp/setup-terraform@v2
+      - uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.4.5
 
