@@ -3,26 +3,15 @@ variable "project" {
   description = "The ID of the GCP project to use."
 }
 
-variable "region_eu" {
+variable "region" {
   type        = string
-  description = "The main GCP region to use."
+  description = "The  GCP region to use."
 }
 
-variable "region_us" {
+variable "zone" {
   type        = string
-  description = "The second GCP region to use."
+  description = "The  GCP zone to use."
 }
-
-variable "zone_eu" {
-  type        = string
-  description = "The main GCP zone to use."
-}
-
-variable "zone_us" {
-  type        = string
-  description = "The second GCP zone to use."
-}
-
 
 variable "labels" {
   type        = map(any)
