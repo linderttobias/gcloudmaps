@@ -49,7 +49,7 @@ jobs:
       - id: init
         name: Terraform Init
         working-directory: infrastructure
-        run: terraform init -input=false"
+        run: terraform init -input=false
 
       - id: validate
         name: Terraform Validate
