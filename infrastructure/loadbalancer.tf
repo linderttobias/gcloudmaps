@@ -62,11 +62,11 @@ resource "google_compute_url_map" "http-redirect" {
   name = "http-redirect"
 
   default_url_redirect {
-    redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"  // 301 redirect
+    redirect_response_code = "MOVED_PERMANENTLY_DEFAULT" // 301 redirect
     strip_query            = false
-    https_redirect         = true  // this is the magic
+    https_redirect         = true // this is the magic
   }
-  
+
 }
 
 resource "google_compute_target_https_proxy" "default" {
@@ -93,12 +93,12 @@ resource "google_compute_global_forwarding_rule" "default" {
 
 
 resource "google_compute_global_forwarding_rule" "http_forward" {
-  name       = "http-forwarding-rule"
+  name                  = "http-forwarding-rule"
   ip_protocol           = "TCP"
   load_balancing_scheme = "EXTERNAL_MANAGED"
-  target     = google_compute_target_http_proxy.default.self_link
+  target                = google_compute_target_http_proxy.default.self_link
   ip_address            = google_compute_global_address.default.id
-  port_range = "80"
+  port_range            = "80"
 }
 
 resource "google_compute_region_network_endpoint_group" "cloudrun_neg" {

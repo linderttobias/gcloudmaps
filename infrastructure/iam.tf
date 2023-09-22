@@ -70,16 +70,16 @@ resource "google_artifact_registry_repository_iam_member" "member-cloudbuild" {
 
 resource "google_cloud_run_service_iam_member" "member-frontend" {
   location = var.region
-  project = var.project
-  service = google_cloud_run_v2_service.frontend.name
-  role = "roles/run.admin"
-  member     = "serviceAccount:${google_service_account.umsa-cloudbuild.email}"
+  project  = var.project
+  service  = google_cloud_run_v2_service.frontend.name
+  role     = "roles/run.admin"
+  member   = "serviceAccount:${google_service_account.umsa-cloudbuild.email}"
 }
 
 resource "google_cloud_run_service_iam_member" "member-backend" {
   location = var.region
-  project = var.project
-  service = google_cloud_run_v2_service.backend.name
-  role = "roles/run.admin"
-  member     = "serviceAccount:${google_service_account.umsa-cloudbuild.email}"
+  project  = var.project
+  service  = google_cloud_run_v2_service.backend.name
+  role     = "roles/run.admin"
+  member   = "serviceAccount:${google_service_account.umsa-cloudbuild.email}"
 }
