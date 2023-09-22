@@ -35,7 +35,7 @@ resource "google_compute_backend_service" "api" {
 
 resource "google_compute_url_map" "default" {
   name        = "gcloudmaps-lb-http-https"
-  description = "a description"
+  description = "Url Map for redirecting"
 
   default_service = google_compute_backend_service.default.id
 
@@ -82,7 +82,7 @@ resource "google_compute_target_http_proxy" "default" {
 }
 
 
-resource "google_compute_global_forwarding_rule" "default" {
+resource "google_compute_global_forwarding_rule" "https_forward" {
   name                  = "https-forwarding-rule"
   ip_protocol           = "TCP"
   load_balancing_scheme = "EXTERNAL_MANAGED"
