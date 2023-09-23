@@ -1,8 +1,11 @@
+name: test urls
+
 on:
   pull_request:
-    branches:
-    - main
-  workflow_dispatch:
+    branches: [ "main" ]
+    paths:
+      - 'application/backend/data/**'
+      - '.github/workflows/main.yaml'
   
 jobs:
   runscript:
