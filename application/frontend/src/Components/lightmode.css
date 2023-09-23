@@ -1,0 +1,87 @@
+label {
+  width:66px;
+  height:33px;
+  position: relative;
+  display: block;
+  background: var(--bg-color);
+  border-radius: 12px;
+  border: 2px var(--font-color);
+  cursor: pointer;
+  border: 2px solid var(--font-color);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 5px 20px 0px;
+  transition: 0s;
+}
+
+label:hover {
+  border-color: var(--secondary-color);
+}
+
+label:after {
+  content: "";
+  width: 26px;
+  height: 26px;
+  top: 2px;
+  left: 2px;
+  position: absolute;
+  background: var(--bg-color);
+  border-radius: 180px;
+  box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+  border: 2px solid var(--font-color);
+}
+
+.inputToggle {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.inputToggle:checked + label {
+  background: var(--bg-color);
+}
+
+.inputToggle:checked + label:after {
+  left:34px;
+  background: var(--bg-color)
+}
+label, label:after {
+  transition: 0.3s
+}
+
+
+label svg {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: 5px;
+  z-index: 100;
+}
+
+label svg.moon {
+
+
+  left:5px;
+  height: 23px;
+  width: 23px;
+  transition: 0.3s;
+
+}
+label svg.sun {
+  left:37px;
+  transition: 0.3s;
+}
+
+label svg.sun path {
+  fill: rgb(255, 255, 255);
+}
+
+label svg.moon path {
+  fill: rgb(255, 255, 255);
+}
+
+
+.inputToggle:checked + label svg.sun path{
+  fill:#000000;
+}
+.inputToggle:checked + label svg.moon path{
+  fill:#000000;
+}

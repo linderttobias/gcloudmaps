@@ -1,0 +1,58 @@
+name: test urls
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'application/backend/data/**'
+      - '.github/workflows/main.yaml'
+  
+jobs:
+  runscript:
+    name: Check urls for validity
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout Repository
+        uses: actions/checkout@v2.3.4
+      - name: Check validity of links
+        run:  |
+          directory="application/backend/data"
+
+          # Array to store file paths
+          file_list=()
+
+          # Iterate over each file in the directory
+          for file in "$directory"/*; do
+              # Check if the path is a file (not a directory)
+              if [[ -f "$file" ]]; then
+                  # Add file path to the array
+                  file_list+=("$file")
+              fi
+          done
+
+
+          for file in $file_list; do
+              echo $file
+              # Extract links from the .json file
+              links=$(jq -r '.nodes[].data.link' $file)
+
+              filtered_links=()
+
+              # Clean and Filter possible links
+              for link in $(echo "${links[@]}"); do
+                  if [[ "$link" == https://* ]]; then
+                      filtered_links+=("$link")
+                  fi
+              done
+
+              # Check link if they are still being served
+              for link in "${filtered_links[@]}"; do
+                  http_status=$(curl -s -o /dev/null -w "%{http_code}" $link)
+                  echo "$link"
+                  echo "$http_status"
+                  if [[ "$http_status" != "200" ]]; then
+                      echo "Invalid Link detected"
+                      exit;
+                  fi
+              done
+          done
