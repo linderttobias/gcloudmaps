@@ -1,4 +1,4 @@
-name: Build, Push, and Deploy to Cloud Run - Backend
+name: "Deploy to Google Cloud Run"
 
 on:
   push:
@@ -7,18 +7,13 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+  deploy:
     permissions:
-      contents: 'read'
       id-token: 'write'
-
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Configure Docker
-        uses: actions/setup-docker@v2
 
       - id: 'deploymentAuth'
         name: 'Authenticate to Google Cloud'
@@ -27,25 +22,25 @@ jobs:
           workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
           service_account: '${{ secrets.GCP_USMA_DEPLOYMENT }}'
 
-      - name: Build Docker image
-        run: |
-          docker build -t europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:latest application/backend
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: gcloudmaps
+          export_default_credentials: true
 
+      - name: Configure docker for GCP
+        run: gcloud auth configure-docker
 
-      - name: Authenticate with Google Cloud
-        run: |
-          gcloud auth configure-docker
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: application/backend
+          push: true
+          tags: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:latest
 
-
-      - name: Push Docker image to Google Artifact Registry
-        run: |
-          docker push europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:latest
-
-
-      - name: Deploy to Google Cloud Run
-        run: |
-          gcloud run deploy gcloudmaps-backend \
-            --image europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend \
-            --region europe-west1 \
-
-
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          image: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:latest
+          service: gcloudmaps-backend
+          region: europe-west1
