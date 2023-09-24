@@ -22,11 +22,10 @@ jobs:
           workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
           service_account: '${{ secrets.GCP_USMA_DEPLOYMENT }}'
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@master
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
         with:
-          project_id: gcloudmaps
-          export_default_credentials: true
+          version: '>= 363.0.0'
 
       - name: Configure docker for GCP
         run: gcloud auth configure-docker
