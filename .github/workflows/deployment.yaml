@@ -1,0 +1,51 @@
+name: Build, Push, and Deploy to Cloud Run - Backend
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure Docker
+        uses: actions/setup-docker@v2
+
+      - id: 'deploymentAuth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1.0.0'
+        with:
+          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
+          service_account: '${{ secrets.GCP_USMA_DEPLOYMENT }}'
+
+      - name: Build Docker image
+        run: |
+          docker build -t europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:latest application/backend
+
+
+      - name: Authenticate with Google Cloud
+        run: |
+          gcloud auth configure-docker
+
+
+      - name: Push Docker image to Google Artifact Registry
+        run: |
+          docker push europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:latest
+
+
+      - name: Deploy to Google Cloud Run
+        run: |
+          gcloud run deploy gcloudmaps-backend \
+            --image europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend \
+            --region europe-west1 \
+
+
