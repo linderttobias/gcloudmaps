@@ -1,4 +1,4 @@
-name: "frontend - Deploy to Google Cloud Run"
+name: "frontend - deployment"
 
 on:
   push:

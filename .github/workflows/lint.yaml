@@ -1,4 +1,4 @@
-name: Lint Commit Messages
+name: "commit linting"
 
 on:
   push:
