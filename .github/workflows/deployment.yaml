@@ -11,6 +11,7 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -29,7 +30,7 @@ jobs:
           version: '>= 363.0.0'
 
       - name: Configure docker for GCP
-        run: gcloud auth configure-docker
+        run: gcloud auth configure-docker europe-west1-docker.pkg.dev
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
