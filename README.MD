@@ -1,3 +1,11 @@
+[![Backend - Deploy to Google Cloud Run](https://github.com/hunderttausendwatt/gcloudmaps/actions/workflows/backend.yaml/badge.svg)](https://github.com/hunderttausendwatt/gcloudmaps/actions/workflows/backend.yaml)
+
+[![frontend - Deploy to Google Cloud Run](https://github.com/hunderttausendwatt/gcloudmaps/actions/workflows/frontend.yaml/badge.svg)](https://github.com/hunderttausendwatt/gcloudmaps/actions/workflows/frontend.yaml)
+
+[![Terraform Deployment](https://github.com/hunderttausendwatt/gcloudmaps/actions/workflows/terraform.yaml/badge.svg)](https://github.com/hunderttausendwatt/gcloudmaps/actions/workflows/terraform.yaml)
+
+[![Lint Commit Messages](https://github.com/hunderttausendwatt/gcloudmaps/actions/workflows/lint.yaml/badge.svg)](https://github.com/hunderttausendwatt/gcloudmaps/actions/workflows/lint.yaml)
+
 # gcloudmaps.com
 
 gcloudmaps presents Google Cloud Services
