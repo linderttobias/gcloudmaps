@@ -8,5 +8,5 @@ These records provide context, trade-offs, and reasoning taken at our community 
 Get started created a new decision record with the template:
 
 ```sh
-cp template.md NN-title-with-dashes.md
+cp template.md YYYY-MM-title-with-dashes.md
 ```
