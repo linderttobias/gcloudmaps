@@ -1,13 +1,14 @@
-name: "Deploy to Google Cloud Run"
+name: "Backend - Deploy to Google Cloud Run"
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    paths:
+      - 'application/backend/**'
+      - '.github/workflows/backend.yaml'
 
 jobs:
-  deploy:
+  deploy-backend:
     permissions:
       contents: 'read'
       id-token: 'write'
