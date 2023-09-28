@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
     paths:
       - 'application/backend/data/**'
-      - '.github/workflows/links.yaml'
+      - '.github/workflows/urls.yaml'
   
 jobs:
   runscript:
