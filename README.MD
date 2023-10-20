@@ -15,7 +15,7 @@ by using various Google Cloud Services and
 propagates Best Practices for Cloud.
 
 
-![Gcloudmaps](docs/gcloudmaps.png?raw=true "Gcloudmaps")
+![Gcloudmaps](docs/architecture/2023-10-20-gcloudmaps.png?raw=true "Gcloudmaps")
 ## Overview
 
 Frontend and Backend in Folder "application"
