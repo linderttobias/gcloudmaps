@@ -1,6 +1,6 @@
 FROM node:18.15.0-alpine AS ui-build
 
-ENV REACT_APP_API_URL="https://gcloudmaps.com"
+ENV REACT_APP_API_URL="https://gcloudmaps.com/api"
 ENV REACT_APP_ENV = "PROD"
 
 WORKDIR /usr/src/app

@@ -16,7 +16,7 @@ resourceServices = {
     ]
 }
 
-@app.route("/<resource_name>/<service_name>", methods=["GET"])
+@app.route("/api/<resource_name>/<service_name>", methods=["GET"])
 def handle_get(resource_name, service_name):
     if resource_name not in resourceServices:
         return "Not found", 404
@@ -24,7 +24,7 @@ def handle_get(resource_name, service_name):
         return "Not found", 404
     return get_mindmaps(service_name)
     
-@app.route("/<resource_name>/<service_name>", methods=["POST"])
+@app.route("/api/<resource_name>/<service_name>", methods=["POST"])
 def handle_insert(resource_name, service_name):
     if resource_name not in resourceServices:
         return "Not found", 404
