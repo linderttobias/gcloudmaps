@@ -37,7 +37,7 @@ const nodeTypes = {
 const getNodeId = () => Math.random().toString(36).substring(2, 15)
 
 function fetchData(service) {
-  const url = apiUrl + '/data' + '?service=' + service;
+  const url = apiUrl + '/mindmaps/' + service;
   return fetch(url)
     .then(response => response.json())
     .catch(error => console.error(error));
@@ -207,7 +207,7 @@ const SaveRestore = () => {
       const data = JSON.stringify(flow)
       console.log(data)
 
-      const url = apiUrl + '/save' + '?service=' + localStorage.getItem("service");
+      const url = apiUrl + '/mindmaps/' + localStorage.getItem("service");
       console.log(url);
       console.log(localStorage.getItem("service"))
 
