@@ -50,7 +50,7 @@ resource "google_compute_url_map" "default" {
     default_service = google_compute_backend_service.default.self_link
 
     path_rule {
-      paths   = ["/data"]
+      paths   = ["/api"]
       service = google_compute_backend_service.api.self_link
     }
   }
