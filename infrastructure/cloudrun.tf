@@ -11,7 +11,7 @@ resource "google_artifact_registry_repository" "gcloudmaps" {
 resource "google_cloud_run_v2_service" "frontend" {
   name     = "gcloudmaps-frontend"
   location = var.region
-  ingress  = "INGRESS_TRAFFIC_ALL"
+  ingress  = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
 
 
   template {
@@ -38,7 +38,7 @@ resource "google_cloud_run_v2_service" "frontend" {
 resource "google_cloud_run_v2_service" "backend" {
   name     = "gcloudmaps-backend"
   location = var.region
-  ingress  = "INGRESS_TRAFFIC_ALL"
+  ingress  = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
 
 
   template {
