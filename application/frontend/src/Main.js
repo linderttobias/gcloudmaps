@@ -98,7 +98,6 @@ const SaveRestore = () => {
     })
   }, [])
 
-  const [nodeExample, setNodeExample] = useState(null)
   const [shortDescription, setShortDescription] = useState('unknown')
   const [link, setLink] = useState(null)
   const [nodeName, setNodeName] = useState('Node1')
@@ -231,7 +230,6 @@ const SaveRestore = () => {
     setNodeName(node.data.label)
     setLink(node.data.link)
     setShortDescription(node.data.shortDescription)
-    setNodeExample(node.data.nodeExample)
     setShowNodeInfo(true)
   }
 
@@ -282,14 +280,13 @@ const SaveRestore = () => {
           node.data = {
             ...node.data,
             link: link,
-            nodeExample: nodeExample
           }
         }
 
         return node
       })
     )
-  }, [link, setLink, nodeExample, setNodeExample])
+  }, [link, setLink])
 
   if (env !== 'development') {
     return (
@@ -298,12 +295,7 @@ const SaveRestore = () => {
         edges={edges}
         nodeTypes={nodeTypes}
         onInit={setRfInstance}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
         onNodeClick={onNodeClick}
-        onConnectStart={onConnectStart}
-        onConnectEnd={onConnectEnd}
         onPaneClick={onPaneClick}
         fitView
       >
