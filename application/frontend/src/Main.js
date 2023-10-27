@@ -179,7 +179,7 @@ const Application = () => {
 
 
   const init = useCallback(() => {
-    setLoggedIn(true)
+    setLoggedIn(false)
     fetchData(service, apiUrl).then((data) => {
       setMindMap(data.nodes, data.edges);
     });
