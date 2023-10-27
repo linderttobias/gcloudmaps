@@ -1,4 +1,4 @@
-import React, { useState, useNodesState } from "react";
+import React, { useState } from "react";
 
 import useStore from "../store";
 
@@ -11,12 +11,14 @@ const NodeElements = ({ id, type, label, link, description }) => {
   const updateNodeDescription = useStore(
     (state) => state.updateNodeDescription
   );
-  const updateNodeLink = useStore(
-    (state) => state.updateNodeLink
-  );
+  const updateNodeLink = useStore((state) => state.updateNodeLink);
+  const loggedIn = useStore((state) => state.loggedIn);
 
   const handleDoubleClick = () => {
-    setIsEditing(true);
+    if (loggedIn) {
+      console.log(loggedIn)
+      setIsEditing(true);
+    }
   };
 
   const handleChange = (event) => {
@@ -38,60 +40,81 @@ const NodeElements = ({ id, type, label, link, description }) => {
     setIsEditing(false);
   };
 
-  return (
-    <div onDoubleClick={handleDoubleClick}>
-      {isEditing ? (
-        <>
-          <div style={{ margin: "auto", maxWidth: 200 }}>
-            <input
-              type="text"
-              value={text}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            <input
-              type="text"
-              value={descr}
-              onChange={handleChangeDescription}
-              onBlur={handleBlur}
-            />
-            <input
-              type="text"
-              value={clink}
-              onChange={handleChangeLink}
-              onBlur={handleBlur}
-            />
+  if (isEditing) {
+    return (
+      <div style={{ margin: "auto", maxWidth: 200 }}>
+        <input
+          type="text"
+          value={text}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        <input
+          type="text"
+          value={descr}
+          onChange={handleChangeDescription}
+          onBlur={handleBlur}
+        />
+        <input
+          type="text"
+          value={clink}
+          onChange={handleChangeLink}
+          onBlur={handleBlur}
+        />
+      </div>
+    );
+  }
+
+  switch (type) {
+    case "left":
+      return (
+        <div
+          style={{ display: "flex", alignItems: "center" }}
+          onDoubleClick={handleDoubleClick}
+        >
+          <div style={{ fontSize: "10px", marginRight: "5px", maxWidth: 200 }}>
+            {descr}
           </div>
-        </>
-      ) : (
-        <>
-          {type === "left" ? (
-            <div style={{ display: "flex" }}>
-              <div style={{ fontSize: "10px", marginRight: "5px" }}>
-                {descr}
-              </div>
-              {text}
-            </div>
-          ) : (
-            <>
-              {clink ? (
-                <a href={clink} target="_blank">
-                  {text}
-                </a>
-              ) : (
-                text
-              )}
-              <div style={{ margin: "auto", maxWidth: 200 }}>
-                <div style={{ fontSize: "10px", marginTop: "5px" }}>
-                  {descr}
-                </div>
-              </div>
-            </>
-          )}
-        </>
-      )}
-    </div>
-  );
+          { link ? <a href={link} target="_blank">{text}</a> : text}
+        </div>
+      );
+    case "right":
+      return (
+        <div
+          style={{ display: "flex", alignItems: "center" }}
+          onDoubleClick={handleDoubleClick}
+        >
+          { link ? <a href={link} target="_blank">{text}</a> : text}
+          <div style={{ fontSize: "10px", marginLeft: "5px", maxWidth: 200 }}>
+            {descr}
+          </div>
+        </div>
+      );
+    case "top":
+      return (
+        <div
+          style={{ display: "center", alignItems: "center" }}
+          onDoubleClick={handleDoubleClick}
+        >
+          <div style={{ fontSize: "10px", marginBottom: "2px", maxWidth: 175 }}>
+            {descr}
+          </div>
+          { link ? <a href={link} target="_blank">{text}</a> : text}
+        </div>
+      );
+    case "bottom":
+      return (
+        <div
+          style={{ display: "center", alignItems: "center" }}
+          onDoubleClick={handleDoubleClick}
+        >
+          { link ? <a href={link} target="_blank">{text}</a> : text}
+          <div style={{ fontSize: "10px", marginTop: "2px", maxWidth: 175 }}>
+            {descr}
+          </div>
+        </div>
+      );
+  }
 };
 
 export default NodeElements;

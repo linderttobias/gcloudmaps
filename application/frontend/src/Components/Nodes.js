@@ -3,26 +3,6 @@ import { Handle, Position} from 'reactflow'
 import '../index.css'
 import NodeElements from './NodeElements';
 
-function Text({label, link, id}) {
-  return (link ? (
-    <a href={link} target='_blank'>
-      {label}
-    </a>
-  ) : (
-    <NodeElements initialText={label} id={id} />
-  ));
-}
-
-function Description({text, width}) {
-  return (
-    text ? (
-      <div style={{ margin: 'auto', maxWidth: width}}>
-        <div style={{ fontSize: '10px', marginTop: '5px' }}>{text}</div>
-      </div>
-    ) : null
-  );
-}
-
 function NodeTop({ id, data }) {
   return (
     <div>
@@ -50,7 +30,7 @@ function NodeBottom({ id, data }) {
 function NodeLeft({ id, data }) {
   return (
     <div>
-      <NodeElements id={id} type="bottom" label={data.label} link={data.link} description={data.shortDescription}/>
+      <NodeElements id={id} type="left" label={data.label} link={data.link} description={data.shortDescription}/>
       <Handle type='source' position={Position.Left} id='left' />
       <Handle type='target' position={Position.Right} id='right' />
       <Handle type='source' position={Position.Bottom} id='bottom' />
@@ -62,7 +42,7 @@ function NodeLeft({ id, data }) {
 function NodeRight({ id, data }) {
   return (
     <div>
-      <NodeElements id={id} type="bottom" label={data.label} link={data.link} description={data.shortDescription}/>
+      <NodeElements id={id} type="right" label={data.label} link={data.link} description={data.shortDescription}/>
       <Handle type='target' position={Position.Left} id='left' />
       <Handle type='source' position={Position.Right} id='right' />
       <Handle type='source' position={Position.Bottom} id='bottom' />

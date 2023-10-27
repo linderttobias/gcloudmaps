@@ -3,14 +3,13 @@ import { create } from "zustand";
 import { nanoid } from "nanoid/non-secure";
 
 const useStore = create((set, get) => ({
-  nodes: [
-    {
-      id: "root",
-      type: "infoNode_main",
-      data: { label: "React Flow Mind Map" },
-      position: { x: 0, y: 0 },
-    },
-  ],
+  loggedIn: false,
+  setLoggedIn: ( isLoggedIn ) => {
+    set({
+      loggedIn: isLoggedIn
+    });
+  },
+  nodes: [],
   edges: [],
   setMindMap: (node, edge) => {
     set({
