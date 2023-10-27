@@ -4,17 +4,13 @@ import "./styles.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import App from "./App";
-import Home from "./Home";
-
-
+import Main from "./Main";
 
 export default function Apps() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route index element={<App />} />
-          <Route path="/about" element={<Home />} />
+        <Route index element={<Main />} />
       </Routes>
     </BrowserRouter>
   );
