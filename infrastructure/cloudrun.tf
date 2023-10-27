@@ -86,8 +86,8 @@ resource "google_cloud_run_v2_service" "frontend-test" {
         container_port = 3000
       }
 
-       env {
-        name = "FOO"
+      env {
+        name  = "FOO"
         value = "bar"
       }
     }
