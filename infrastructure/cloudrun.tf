@@ -66,7 +66,7 @@ resource "google_cloud_run_v2_service" "backend" {
 resource "google_cloud_run_v2_service" "frontend-test" {
   name     = "gcloudmaps-frontend-test"
   location = var.region
-  ingress  = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
+  ingress  = "INGRESS_TRAFFIC_ALL"
 
 
   template {
@@ -98,7 +98,7 @@ resource "google_cloud_run_v2_service" "frontend-test" {
 resource "google_cloud_run_v2_service" "backend-test" {
   name     = "gcloudmaps-backend-test"
   location = var.region
-  ingress  = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
+  ingress  = "INGRESS_TRAFFIC_ALL"
 
 
   template {
