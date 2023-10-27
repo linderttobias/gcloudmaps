@@ -7,14 +7,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./Main";
 import About from "./About";
 
-
-
 export default function Apps() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route index element={<Main />} />
-          <Route path="/about" element={<About />} />
+        <Route index element={<Main />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,26 +1,32 @@
 // Import required libraries
-import { Handle, Position } from 'reactflow'
+import { Handle, Position} from 'reactflow'
 import '../index.css'
+import NodeElements from './NodeElements';
 
-function NodeTop({ data }) {
+function Text({label, link, id}) {
+  return (link ? (
+    <a href={link} target='_blank'>
+      {label}
+    </a>
+  ) : (
+    <NodeElements initialText={label} id={id} />
+  ));
+}
+
+function Description({text, width}) {
+  return (
+    text ? (
+      <div style={{ margin: 'auto', maxWidth: width}}>
+        <div style={{ fontSize: '10px', marginTop: '5px' }}>{text}</div>
+      </div>
+    ) : null
+  );
+}
+
+function NodeTop({ id, data }) {
   return (
     <div>
-      <div style={{ justifyContent: 'center' }}>
-        {data.shortDescription ? (
-          <div style={{ margin: 'auto', maxWidth: '150px' }}>
-            {data.shortDescription ? <div style={{ fontSize: '10px', marginTop: '5px' }}>{data.shortDescription}</div> : null}
-          </div>
-        ) : null}
-        <div style={{ justifyContent: 'center', display: 'flex' }}>
-          {data.link ? (
-            <a href={data.link} target='_blank'>
-              {data.label}
-            </a>
-          ) : (
-            data.label
-          )}
-        </div>
-      </div>
+      <NodeElements id={id} type="top" label={data.label} link={data.link} description={data.shortDescription}/>
       <Handle type='source' position={Position.Left} id='left' />
       <Handle type='source' position={Position.Right} id='right' />
       <Handle type='target' position={Position.Bottom} id='bottom' />
@@ -29,25 +35,10 @@ function NodeTop({ data }) {
   )
 }
 
-function NodeBottom({ data }) {
+function NodeBottom({ id, data }) {
   return (
     <div>
-      <div style={{ justifyContent: 'center' }}>
-        <div style={{ justifyContent: 'center', display: 'flex' }}>
-          {data.link ? (
-            <a href={data.link} target='_blank'>
-              {data.label}
-            </a>
-          ) : (
-            data.label
-          )}
-        </div>
-        {data.shortDescription ? (
-          <div style={{ margin: 'auto', maxWidth: '150px' }}>
-            {data.shortDescription ? <div style={{ fontSize: '10px', marginTop: '5px' }}>{data.shortDescription}</div> : null}
-          </div>
-        ) : null}
-      </div>
+      <NodeElements id={id} type="bottom" label={data.label} link={data.link} description={data.shortDescription}/>
       <Handle type='source' position={Position.Left} id='left' />
       <Handle type='source' position={Position.Right} id='right' />
       <Handle type='source' position={Position.Bottom} id='bottom' />
@@ -56,23 +47,10 @@ function NodeBottom({ data }) {
   )
 }
 
-function NodeLeft({ data }) {
+function NodeLeft({ id, data }) {
   return (
     <div>
-      <div style={{ display: 'flex' }}>
-        {data.shortDescription ? (
-          <div style={{ margin: 'auto', maxWidth: '250px' }}>
-            {data.shortDescription ? <div style={{ fontSize: '10px', marginRight: '5px' }}>{data.shortDescription}</div> : null}
-          </div>
-        ) : null}
-        {data.link ? (
-          <a href={data.link} target='_blank'>
-            {data.label}
-          </a>
-        ) : (
-          data.label
-        )}
-      </div>
+      <NodeElements id={id} type="bottom" label={data.label} link={data.link} description={data.shortDescription}/>
       <Handle type='source' position={Position.Left} id='left' />
       <Handle type='target' position={Position.Right} id='right' />
       <Handle type='source' position={Position.Bottom} id='bottom' />
@@ -81,23 +59,10 @@ function NodeLeft({ data }) {
   )
 }
 
-function NodeRight({ data }) {
+function NodeRight({ id, data }) {
   return (
     <div>
-      <div style={{ display: 'flex' }}>
-        {data.link ? (
-          <a href={data.link} target='_blank'>
-            {data.label}
-          </a>
-        ) : (
-          data.label
-        )}
-        {data.shortDescription ? (
-          <div style={{ margin: 'auto', width: 250 }}>
-            {data.shortDescription ? <div style={{ fontSize: '10px', marginLeft: '5px' }}>{data.shortDescription}</div> : null}
-          </div>
-        ) : null}
-      </div>
+      <NodeElements id={id} type="bottom" label={data.label} link={data.link} description={data.shortDescription}/>
       <Handle type='target' position={Position.Left} id='left' />
       <Handle type='source' position={Position.Right} id='right' />
       <Handle type='source' position={Position.Bottom} id='bottom' />
@@ -106,7 +71,7 @@ function NodeRight({ data }) {
   )
 }
 
-function NodeMain({ data }) {
+function NodeMain({ id, data }) {
   return (
     <div>
       <Handle type='source' position={Position.Left} id='left' isConnectable={true} />
