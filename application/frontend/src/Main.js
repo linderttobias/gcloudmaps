@@ -49,15 +49,12 @@ localStorage.setItem("theme", "dark");
 document.documentElement.setAttribute("data-theme", "dark");
 
 const Application = () => {
-
   const googleServices = [
     { value: "bigquery", label: "BigQuery" },
     { value: "cloudstorage", label: "Cloud Storage" },
     { value: "cloudrun", label: "Cloud Run" },
     { value: "more-coming-soon", label: "More coming soon ..." },
   ];
-
-
 
   const {
     loggedIn,
@@ -93,7 +90,7 @@ const Application = () => {
 
     // we need to remove the wrapper bounds, in order to get the correct mouse position
     const panePosition = project({
-      x: event.clientX ,
+      x: event.clientX,
       y: event.clientY,
     });
 
@@ -143,7 +140,6 @@ const Application = () => {
 
   const onSave = useCallback(() => {
     if (rfInstance) {
-
       const url = apiUrl + "/mindmaps/" + localStorage.getItem("service");
 
       fetch(url, {
@@ -175,28 +171,28 @@ const Application = () => {
         rfInstance.fitView();
       }, 100);
     }
-  };  
-
+  };
 
   const init = useCallback(() => {
-    setLoggedIn(false)
+    setLoggedIn(false);
     fetchData(service, apiUrl).then((data) => {
       setMindMap(data.nodes, data.edges);
     });
-  },);
-
+  });
 
   const addMindMap = useCallback(() => {
-    setMindMap([
-      {
-        id: 'root',
-        type: 'infoNode_main',
-        data: { label: 'React Flow Mind Map' },
-        position: { x: 0, y: 0 },
-      },
-    ], [])
-  },);
-
+    setMindMap(
+      [
+        {
+          id: "root",
+          type: "infoNode_main",
+          data: { label: "React Flow Mind Map" },
+          position: { x: 0, y: 0 },
+        },
+      ],
+      []
+    );
+  });
 
   return (
     <ReactFlow
@@ -216,7 +212,13 @@ const Application = () => {
         <div className="component">
           gcloudmaps<sup class="superscript">by Tobias Lindert</sup>
         </div>
-        { loggedIn ? ( <div className="about"><div id="1" class="info-button" onClick={addMindMap}>Add MindMap</div></div>) : null}
+        {loggedIn ? (
+          <div className="about">
+            <div id="1" class="info-button" onClick={addMindMap}>
+              Add MindMap
+            </div>
+          </div>
+        ) : null}
         <div className="scrollbar">
           <Select
             className="my-react-select-container"
@@ -234,7 +236,7 @@ const Application = () => {
                 boxShadow: "rgba(100, 100, 111, 0.2) 0px 5px 20px 0px",
                 height: "35px",
                 transition: "0s",
-                marginLeft: "8px"
+                marginLeft: "8px",
               }),
             }}
           />
