@@ -1,4 +1,5 @@
 function fetchData(service, urli) {
+  console.log(urli)
   const url = urli + "/mindmaps/" + service;
   return fetch(url)
     .then((response) => response.json())
