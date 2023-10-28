@@ -80,3 +80,21 @@ resource "google_cloud_run_service_iam_member" "member-backend" {
   role     = "roles/run.admin"
   member   = "serviceAccount:${google_service_account.umsa-deployment.email}"
 }
+
+
+
+resource "google_cloud_run_service_iam_member" "member-frontend-test" {
+  location = var.region
+  project  = var.project
+  service  = google_cloud_run_v2_service.frontend-test.name
+  role     = "roles/run.admin"
+  member   = "serviceAccount:${google_service_account.umsa-deployment.email}"
+}
+
+resource "google_cloud_run_service_iam_member" "member-backend-test" {
+  location = var.region
+  project  = var.project
+  service  = google_cloud_run_v2_service.backend-test.name
+  role     = "roles/run.admin"
+  member   = "serviceAccount:${google_service_account.umsa-deployment.email}"
+}
