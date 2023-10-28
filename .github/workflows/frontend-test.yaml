@@ -2,7 +2,7 @@ name: "frontend - deployment"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
     paths:
       - 'application/frontend/**'
       - '.github/workflows/frontend.yaml'
@@ -38,13 +38,13 @@ jobs:
         with:
           context: application/frontend
           push: true
-          tags: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/frontend:latest
+          tags: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/frontend:dev
           build-args: |
-            REACT_APP_API_URL="https://gcloudmaps.com/api"
+            REACT_APP_API_URL="https://gcloudmaps-frontend-test-osv4zrdlyq-ew.a.run.app"
 
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
         with:
-          image: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/frontend:latest
-          service: gcloudmaps-frontend
+          image: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/frontend:dev
+          service: gcloudmaps-frontend-test
           region: europe-west1
