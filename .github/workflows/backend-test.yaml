@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
     paths:
       - 'application/backend/**'
-      - '.github/workflows/backend.yaml'
+      - '.github/workflows/backend-test.yaml'
 
 jobs:
   deploy-backend:
