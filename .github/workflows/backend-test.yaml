@@ -1,4 +1,4 @@
-name: "backend - deployment"
+name: "dev - backend - deployment"
 
 on:
   push:
