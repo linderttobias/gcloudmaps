@@ -230,7 +230,7 @@ const Application = () => {
     /* global google */
     google.accounts.id.initialize({
       client_id:
-        "981522904043-i0s14bvioc91pjjgj4153lp03k365noo.apps.googleusercontent.com",
+        "707432047927-ggr2gothraf65v17n16c7048vnj6cf7u.apps.googleusercontent.com",
       callback: handleCallbackResponse,
     });
 
