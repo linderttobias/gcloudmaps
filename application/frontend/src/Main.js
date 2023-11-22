@@ -9,6 +9,10 @@ import ReactFlow, {
 import Select from "react-select";
 import "reactflow/dist/style.css";
 
+import AccountDropdown from "./Components/AccountDropdown.js";
+
+import { jwtDecode } from "jwt-decode";
+
 import "./index.css";
 import LightModeButton from "./Components/LightModeButton.js";
 import {
@@ -49,6 +53,11 @@ localStorage.setItem("theme", "dark");
 document.documentElement.setAttribute("data-theme", "dark");
 
 const Application = () => {
+
+  const menu = [
+    { value: "logout", label: "Logout" },
+  ];
+
   const googleServices = [
     { value: "bigquery", label: "BigQuery" },
     { value: "cloudstorage", label: "Cloud Storage" },
@@ -68,6 +77,7 @@ const Application = () => {
   } = useStore(selector, shallow);
 
   const [service, setService] = useState("bigquery");
+  const [user, setUser] = useState({});
   const connectingNodeId = useRef(null);
   const store = useStoreApi();
   const rfInstance = useReactFlow();
@@ -157,6 +167,9 @@ const Application = () => {
     }
   }, [rfInstance]);
 
+
+
+
   const handleChange = (selectedItem) => {
     setService(selectedItem.value);
     if (selectedItem) {
@@ -194,6 +207,42 @@ const Application = () => {
     );
   });
 
+  function handleSignOut(event) {
+    setUser({});
+    document.getElementById("signInDiv").hidden = false;
+  }
+
+  const handleChange2 = (selectedItem) => {
+    if (selectedItem.value === "logout") {
+      handleSignOut();
+    }
+  };
+
+  function handleCallbackResponse(response) {
+    console.log("encoded JWT ID token: " + response.credential);
+    var userObject = jwtDecode(response.credential);
+    console.log(userObject);
+    setUser(userObject);
+    document.getElementById("signInDiv").hidden = true;
+  }
+  // Initial Load
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "981522904043-i0s14bvioc91pjjgj4153lp03k365noo.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      text: "signin",
+      theme: "outline",
+      size: "large",
+      zindex: "1",
+      width: 50
+    });
+  }, []);
+
   return (
     <ReactFlow
       nodes={nodes}
@@ -206,6 +255,7 @@ const Application = () => {
       onInit={init}
       fitView
     >
+
       <Background color="#818cab" size="0.8" variant="dots" />
       <Controls />
       <div className="container">
@@ -219,6 +269,14 @@ const Application = () => {
             </div>
           </div>
         ) : null}
+        <div style={{ zIndex: 5, display: "flex", alignItems: "center" }}>
+          <div id="signInDiv"></div>
+          {Object.keys(user).length != 0 && (
+            <div>
+              <AccountDropdown user={user} handleChange2={handleChange2}/>
+            </div>
+          )}
+        </div>
         <div className="scrollbar">
           <Select
             className="my-react-select-container"
