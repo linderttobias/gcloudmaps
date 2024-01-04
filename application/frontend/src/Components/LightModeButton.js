@@ -4,15 +4,12 @@ import './lightmode.css'
 function LightMode(props) {
   const scrollToHeader = () => {
     const currentTheme = localStorage.getItem('theme')
-    console.log('current: ', currentTheme)
     if (currentTheme === 'light') {
       document.documentElement.setAttribute('data-theme', 'dark')
       localStorage.setItem('theme', 'dark')
-      console.log('switched to: dark')
     } else {
       document.documentElement.setAttribute('data-theme', 'light')
       localStorage.setItem('theme', 'light')
-      console.log('switched to: dark')
     }
   }
 

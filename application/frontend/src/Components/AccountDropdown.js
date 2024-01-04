@@ -5,6 +5,9 @@ function AccountDropdown({user, handleChange2}) {
 
   const menu = [
     { value: "logout", label: "Logout" },
+    { value: "addnode", label: "Add mindmap"},
+    { value: "savenode", label: "Save mindmap"},
+    { value: "deletenode", label: "Delete mindmap"}
   ];
 
   const DropdownIndicator = props => {
@@ -28,6 +31,7 @@ function AccountDropdown({user, handleChange2}) {
       isSearchable={false}
       components={{ DropdownIndicator }}
       onChange={handleChange2}
+      value="hey"
       styles={{
         control: (baseStyles, state) => ({
           ...baseStyles,

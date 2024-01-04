@@ -6,6 +6,7 @@
   --bg-color: #fff;
   --heading-color: #292922;
   --link-color: rgb(65, 54, 129);
+  --handle-color: rgba(0, 0, 0, 0.151);
 }
 
 [data-theme="dark"] {
@@ -16,6 +17,7 @@
   --bg-color: #161625;
   --heading-color: #818cab;
   --link-color: #76912b;
+  --handle-color: rgba(255, 255, 255, 0.075);
 }
 
 body {
@@ -480,13 +482,30 @@ path.react-flow__edge-path {
 
 
 .react-flow .react-flow__handle {
-  width: 10px;
-  height: 10px;
-  border-radius: 0px;
+  width: 7px;
+  height: 7px;
   background-color: transparent;
-  border-color: transparent;
+  border-color: var(--handle-color);
+  visibility: visible;
 }
 
+
+
+.react-flow .react-flow__handle-top {
+  top: -7px;
+}
+
+.react-flow .react-flow__handle-bottom {
+  bottom: -7px;
+}
+
+.react-flow .react-flow__handle-left {
+  left: -13px;
+}
+
+.react-flow .react-flow__handle-right {
+  right: -13px;
+}
 
 .react-flow .react-flow__controls-button {
   background-color: var(--bg-color);
