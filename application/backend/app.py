@@ -48,6 +48,7 @@ def handle_get_list():
     mml = get_mindmaps_list(g.user)
     return [{'value': item, 'label': item} for item in mml]
 
+
 @app.route("/api/<resource_name>/<service_name>", methods=["GET"])
 def handle_get(resource_name, service_name):
     if resource_name not in resourceServices:
