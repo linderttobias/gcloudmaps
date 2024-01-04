@@ -77,8 +77,5 @@ def handle_insert(resource_name, service_name):
     add_mindmap(g.user, service_name, data)
     return "Successfull", 200
 
-
-
-
 if __name__ == '__main__':
-    app.run(port=3001)
+    app.run(host="127.0.0.1", port=3001, debug=True)
