@@ -2,7 +2,7 @@ name: "dev - backend - deployment"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
     paths:
       - 'application/backend/**'
       - '.github/workflows/backend-test.yaml'
