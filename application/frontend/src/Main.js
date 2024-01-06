@@ -4,6 +4,7 @@ import ReactFlow, {
   Controls,
   useStoreApi,
   useReactFlow,
+  useNodesInitialized,
   ReactFlowProvider,
 } from "reactflow";
 import Select from "react-select";
@@ -44,6 +45,7 @@ const selector = (state) => ({
   setMindMap: state.setMindMap,
 });
 
+
 const nodeTypes = {
   infoNode_top: NodeTop,
   infoNode_right: NodeRight,
@@ -79,7 +81,16 @@ const Application = () => {
   const store = useStoreApi();
   const rfInstance = useReactFlow();
   const project = rfInstance.project;
+  const nodesInitialized = useNodesInitialized();
+  const [serviceChanged, setServiceChanged] = useState(false)
 
+
+  useEffect(() => {
+    if (serviceChanged) {
+      rfInstance.fitView();
+      setServiceChanged(false);
+    }
+  }, [nodesInitialized, serviceChanged]);
 
   // we are calculating with positionAbsolute here because child nodes are positioned relative to their parent
   const getChildNodePosition = (event, parentNode) => {
@@ -186,14 +197,8 @@ const Application = () => {
     if (service) {
       fetchMindMap(service, apiUrl, token).then((data) => {
         setMindMap(data.nodes, data.edges);
+        setServiceChanged(true);
       });
-      if (rfInstance) {
-        // Timeout required to wait for nodes/edges being loaded
-        setTimeout(() => {
-          rfInstance.fitView();
-        }, 100);
-      };
-
     }
   }, [service]);
 
@@ -255,14 +260,22 @@ const Application = () => {
   }
   // Initial Load
   useEffect(() => {
-    
-    /* global google */
 
-    google.accounts.id.initialize({
-      client_id:
-        "707432047927-ggr2gothraf65v17n16c7048vnj6cf7u.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
+    /* global google */
+    function initializeGoogleSignIn() {
+      if (typeof google !== 'undefined') {
+        google.accounts.id.initialize({
+          client_id: "707432047927-ggr2gothraf65v17n16c7048vnj6cf7u.apps.googleusercontent.com",
+          callback: handleCallbackResponse,
+        });
+      } else {
+        // Wait for 100ms before trying again
+        setTimeout(initializeGoogleSignIn, 100);
+      }
+    }
+    
+    initializeGoogleSignIn();
+
 
     google.accounts.id.renderButton(document.getElementById("signInDiv"), {
       theme: "outline",
