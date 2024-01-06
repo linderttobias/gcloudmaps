@@ -1,4 +1,4 @@
-name: "dev - backend - deployment"
+name: "dev/backend/deployment"
 
 on:
   push:
@@ -43,6 +43,6 @@ jobs:
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
         with:
-          image: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:latest
+          image: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend:dev
           service: gcloudmaps-backend-test
           region: europe-west1

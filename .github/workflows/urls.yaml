@@ -1,4 +1,4 @@
-name: test urls
+name: "all/test/urls"
 
 on:
   pull_request:

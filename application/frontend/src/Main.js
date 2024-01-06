@@ -255,7 +255,9 @@ const Application = () => {
   }
   // Initial Load
   useEffect(() => {
+    
     /* global google */
+
     google.accounts.id.initialize({
       client_id:
         "707432047927-ggr2gothraf65v17n16c7048vnj6cf7u.apps.googleusercontent.com",

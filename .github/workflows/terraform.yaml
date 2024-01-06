@@ -1,4 +1,4 @@
-name: terraform - deployment
+name: "main/terraform/deployment"
 
 on:
   push:
