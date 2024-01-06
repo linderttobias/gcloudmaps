@@ -264,9 +264,18 @@ const Application = () => {
     /* global google */
     function initializeGoogleSignIn() {
       if (typeof google !== 'undefined') {
+
+        console.log(google)
         google.accounts.id.initialize({
           client_id: "707432047927-ggr2gothraf65v17n16c7048vnj6cf7u.apps.googleusercontent.com",
           callback: handleCallbackResponse,
+        });
+
+        google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+          theme: "outline",
+          size: "large",
+          zindex: "1",
+          width: 50,
         });
       } else {
         // Wait for 100ms before trying again
@@ -277,12 +286,7 @@ const Application = () => {
     initializeGoogleSignIn();
 
 
-    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-      theme: "outline",
-      size: "large",
-      zindex: "1",
-      width: 50,
-    });
+
   }, []);
 
   return (
