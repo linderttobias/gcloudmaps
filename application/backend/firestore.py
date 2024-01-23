@@ -1,5 +1,5 @@
 from google.cloud import firestore
-#from data import load_json_file
+from data import load_json_file
 from google.cloud.firestore_v1.base_query import FieldFilter
 
 # The `project` parameter is optional and represents which project the client
@@ -7,15 +7,15 @@ from google.cloud.firestore_v1.base_query import FieldFilter
 # project inferred from the environment.
 db = firestore.Client(project="experimentplanet")
 
-# def init_load():
-#     for service in ["bigquery", "cloudrun", "cloudstorage"]:
-#         doc_ref = db.document(f"users/108224810520043020374/mindmaps/{service}")
-#         data = load_json_file(f"{service}.json")
-#         doc_ref.set(
-#             data
-#         )
-#     doc_ref = db.document("users/public")
-#     doc_ref.set({'meta': [{ "value": "bigquery", "label": "BigQuery"}, { "value": "cloudstorage", "label": "Cloud Storage"}, { "value": "cloudrun", "label": "Cloud Run"}]})
+def init_load():
+    for service in ["cloud-architecture"]:
+        doc_ref = db.document(f"users/public/mindmaps/cloudarchitecture")
+        data = load_json_file(f"{service}.json")
+        doc_ref.set(
+            data
+        )
+    doc_ref = db.document("users/public")
+    doc_ref.set({'meta': ["bigquery", "cloudarchitecture", "cloudstorage", "cloudrun"]})
 
 
 ## If user is existing, returns the document, in this case ['bigquery', 'cloudrun']
@@ -62,4 +62,4 @@ def delete_mindmap(user: str, document: str):
 
 
 if __name__ == "__main__":
-    pass
+    init_load()
