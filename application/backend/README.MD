@@ -33,6 +33,9 @@ The application uses Google Cloud SDK and requires credentials to be set to run 
 
 `gcloud auth application-default login`
 
+Set Project for Firestore if different from Cloud Run Env:
+`gcloud config set project <YOURPROJECT>`
+
 ### Local Development
 
 `pyenv local contentapi`
