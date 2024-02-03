@@ -1,23 +1,18 @@
-from flask import Flask, request, jsonify, g
+import logging
+from flask import Flask, request, g
 from flask_cors import CORS
 from google.oauth2 import id_token
 from google.auth.transport import requests as reqs
-from firestore import get_mindmaps, get_mindmaps_list, add_mindmap, delete_mindmap
+import firestore
 
 
 app = Flask(__name__)
 CORS(app)
 
-resourceServices = {
-    "mindmaps" : [
-        "bigquery",
-        "cloud-architecture",
-        "cloudrun",
-        "cloudstorage",
-        "more-coming-soon"
-    ],
-    "list": None
-}
+if __name__ != '__main__':
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
 
 @app.before_request
 def check_user_authentication():
@@ -25,57 +20,61 @@ def check_user_authentication():
     auth = request.headers.get("Authorization", None)
 
     if auth is None or not auth.startswith("Bearer "):
+        app.logger.info("Request without Authorization - Using public user ..")
         g.user = "public"
         return
 
-    token = auth[7:]  # Remove "Bearer: " prefix
+    token = auth[7:]  # 'Bearer: XYZ' -> 'XYU'
 
     info = None
     try:
         if info is None:
             info = id_token.verify_oauth2_token(token, reqs.Request())
     except ValueError:
+        app.logger.info("Oauth2 Token invalid - Using public user ..")
         g.user = "public"
-        pass
 
     if info is not None:  # Remember the user sub address throughout this request
         if "sub" in info:
             g.user = info["sub"]
     return
 
-@app.route("/api/list", methods=['GET'])
-def handle_get_list():
-    mml = get_mindmaps_list(g.user)
-    return [{'value': item, 'label': item} for item in mml]
+
+@app.route("/list", methods=["GET"])
+def get_list():
+    mindmap_list = firestore.load_mindmaps_list(g.user)
+    # Unfortunately we have to do the following remap step, as the Frontend excpects it this ways
+    return [{"value": item, "label": item} for item in mindmap_list]
 
 
-@app.route("/api/<resource_name>/<service_name>", methods=["GET"])
-def handle_get(resource_name, service_name):
-    if resource_name not in resourceServices:
-        return "Not found", 404
-    #if service_name and service_name not in resourceServices[resource_name]:
-    #    return "Not found", 404
-    return get_mindmaps(g.user, service_name)
+@app.route("/mindmaps/<string:mindmap>", methods=["GET"])
+def get_mindmap(mindmap):
+    if mindmap not in firestore.load_mindmaps_list(g.user):
+        return f"Mindmap {mindmap} for user {g.user} not found", 404
+    return firestore.get_mindmap(g.user, mindmap)
 
-@app.route("/api/<resource_name>/<service_name>", methods=["DELETE"])
-def handle_delete(resource_name, service_name):
-    if resource_name not in resourceServices:
-        return "Not found", 404
-    delete_mindmap(g.user, service_name)
+
+@app.route("/mindmaps/<string:mindmap>", methods=["DELETE"])
+def delete_mindmap(mindmap):
+    if mindmap not in firestore.load_mindmaps_list(g.user):
+        return f"Mindmap {mindmap} for user {g.user} not found", 404
+    firestore.delete_mindmap(g.user, mindmap)
     return "Successfull", 200
-    
-@app.route("/api/<resource_name>/<service_name>", methods=["POST"])
-def handle_insert(resource_name, service_name):
-    if resource_name not in resourceServices:
-        return "Not found", 404
+
+
+@app.route("/mindmaps/<string:mindmap>", methods=["POST"])
+def add_mindmap(mindmap):
+    if mindmap not in firestore.load_mindmaps_list(g.user):
+        return f"Mindmap {mindmap} for user {g.user} not found", 404
     if not request.is_json:
         return "Unsupported media type", 415
 
     data = request.get_json(silent=True)
     if data is None:
         return "Bad request", 400
-    add_mindmap(g.user, service_name, data)
+    firestore.add_mindmap(g.user, mindmap, data)
     return "Successfull", 200
 
-if __name__ == '__main__':
-    app.run(host="127.0.0.1", port=3001, debug=True)
+
+if __name__ == "__main__":
+    app.run(host="localhost", port=3001, debug=True)
