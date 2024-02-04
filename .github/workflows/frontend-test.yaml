@@ -39,7 +39,7 @@ jobs:
           context: application/frontend
           push: true
           tags: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/frontend:dev
-          build-args: "REACT_APP_API_URL=https://gcloudmaps-backend-test-osv4zrdlyq-ew.a.run.app/api"
+          build-args: "REACT_APP_API_URL=https://gcloudmaps-backend-test-osv4zrdlyq-ew.a.run.app"
 
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@main
