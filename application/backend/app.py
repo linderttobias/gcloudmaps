@@ -1,3 +1,4 @@
+import os
 import logging
 from flask import Flask, request, g
 from flask_cors import CORS
@@ -9,10 +10,11 @@ import firestore
 app = Flask(__name__)
 CORS(app)
 
-if __name__ != '__main__':
-    gunicorn_logger = logging.getLogger('gunicorn.error')
+if __name__ != "__main__":
+    gunicorn_logger = logging.getLogger("gunicorn.error")
     app.logger.handlers = gunicorn_logger.handlers
     app.logger.setLevel(gunicorn_logger.level)
+
 
 @app.before_request
 def check_user_authentication():
@@ -77,4 +79,8 @@ def add_mindmap(mindmap):
 
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=3001, debug=True)
+    app.run(
+        host=os.environ("HOST", "localhost"),
+        port=int(os.environ("PORT", "3001")),
+        debug=True,
+    )

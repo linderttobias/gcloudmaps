@@ -1,4 +1,3 @@
-import os
 from flask import current_app
 from google.cloud import firestore
 
