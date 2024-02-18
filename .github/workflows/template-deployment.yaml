@@ -67,8 +67,8 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
     steps:
       - name: Deploy to Cloud Run
-        uses: google-github-actions/deploy-cloudrun@main
+        uses: google-github-actions/deploy-cloudrun@v2
         with:
           image: europe-west1-docker.pkg.dev/gcloudmaps/${{ inputs.environment }}/${{ inputs.application }}:${{ github.sha }}
-          service: gcloudmaps-${{ inputs.application }}-test
+          service: gcloudmaps-${{ inputs.application }}-${{ inputs.environment }}
           region: europe-west1
