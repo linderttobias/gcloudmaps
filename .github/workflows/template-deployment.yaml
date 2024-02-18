@@ -75,4 +75,5 @@ jobs:
           image: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/${{ inputs.application }}-${{ inputs.environment }}:${{ github.sha }}
           service: gcloudmaps-${{ inputs.application }}-${{ inputs.environment }}
           region: europe-west1
+          project_id: gcloudmaps
       
