@@ -3,6 +3,18 @@ import { create } from "zustand";
 import { nanoid } from "nanoid/non-secure";
 
 const useStore = create((set, get) => ({
+  mindmapList: [],
+  setMindmapList: ( value ) => {
+    set({
+      mindmapList: value
+    })
+  },
+  service: null,
+  setService: ( value ) => {
+    set({
+      service: value
+    });
+  },
   loggedIn: false,
   setLoggedIn: ( isLoggedIn ) => {
     set({

@@ -1,0 +1,74 @@
+name: Container Deployment - Build, Push to Artifact Registry and Cloud Run Deployment
+
+on:
+  workflow_call:
+    inputs:
+      application: #Its either frontend or backend
+        required: true
+        type: string
+      runner:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string #Its either production or development
+    secrets:
+      # Workload Identity Federation Provider
+      WIF_PROVIDER:
+        required: true
+      # Google Cloud User-managed Service Account with relevant permissions
+      GCP_USMA_TF_PLAN_APPLY:
+        required: true
+
+jobs:
+  build-push:
+    permissions:
+      contents: 'read' # Required to Checkout Repo 
+      id-token: 'write' # Required for Workload Identity Federation
+    runs-on: ${{ inputs.runner }}
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    outputs:
+      # The output is obtained by setting terraform_wrapper to true
+      tfplanExitCode: ${{ steps.terraform_plan.outputs.exitcode  }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Authenticate to Google Cloud
+        uses: 'google-github-actions/auth@v1.0.0'
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_USMA_TF_PLAN_APPLY }}
+
+      - name: Set up Cloud SDK
+        uses: 'google-github-actions/setup-gcloud@v2'
+        with:
+          version: '>= 363.0.0'
+
+      - name: Configure Docker for GCP
+        run: gcloud auth configure-docker europe-west1-docker.pkg.dev
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: europe-west1-docker.pkg.dev/gcloudmaps/${{ inputs.environment }}/${{ inputs.applicaton }}:${{ github.sha }}
+
+  deploy-to-cloudrun:
+    permissions:
+      contents: 'read' # Required to Checkout Repo 
+      id-token: 'write' # Required for Workload Identity Federation
+    runs-on: ${{ inputs.runner }}
+    needs: [build-push]
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          image: europe-west1-docker.pkg.dev/gcloudmaps/${{ inputs.environment }}/${{ inputs.application }}:${{ github.sha }}
+          service: gcloudmaps-${{ inputs.application }}-${{ inputs.environment }}
+          region: europe-west1

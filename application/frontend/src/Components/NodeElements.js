@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect, useRef } from "react";
+import { ContextMenu } from "./ContextMenuUtils";
 import useStore from "../store";
 
 const NodeElements = ({ id, type, label, link, description }) => {
-  const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(label);
   const [descr, setDescr] = useState(description);
-  const [clink, setcLink] = useState(link);
+  const [clink, setClink] = useState(link);
   const updateNodeLabel = useStore((state) => state.updateNodeLabel);
   const updateNodeDescription = useStore(
     (state) => state.updateNodeDescription
@@ -14,12 +13,33 @@ const NodeElements = ({ id, type, label, link, description }) => {
   const updateNodeLink = useStore((state) => state.updateNodeLink);
   const loggedIn = useStore((state) => state.loggedIn);
 
-  const handleDoubleClick = () => {
-    if (loggedIn) {
-      console.log(loggedIn)
-      setIsEditing(true);
+  const [isLabelEditing, setIsLabelEditing] = useState(false);
+
+  const [clicked, setClicked] = useState(false);
+  const [points, setPoints] = useState({ x: 0, y: 0 });
+
+  const divRef = useRef(null);
+
+  const handleDivBlur = (event) => {
+    // Check if the new focused element is outside the div
+    if (!divRef.current.contains(event.relatedTarget)) {
+      setIsLabelEditing(false);
     }
   };
+
+  const handleEditClick = () => {
+    setIsLabelEditing(true);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      setClicked(false);
+    };
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -32,35 +52,31 @@ const NodeElements = ({ id, type, label, link, description }) => {
   };
 
   const handleChangeLink = (event) => {
-    setcLink(event.target.value);
+    setClink(event.target.value);
     updateNodeLink(id, event.target.value);
   };
 
-  const handleBlur = () => {
-    setIsEditing(false);
-  };
-
-  if (isEditing) {
+  if (isLabelEditing) {
     return (
-      <div style={{ margin: "auto", maxWidth: 200 }}>
-        <input
-          type="text"
-          value={text}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        <input
-          type="text"
-          value={descr}
-          onChange={handleChangeDescription}
-          onBlur={handleBlur}
-        />
-        <input
-          type="text"
-          value={clink}
-          onChange={handleChangeLink}
-          onBlur={handleBlur}
-        />
+      <div
+        ref={divRef}
+        tabIndex="0"
+        onBlur={handleDivBlur}
+        style={{ fontSize: "10px" }}
+      >
+        <div>
+          name:
+          <input value={text} onChange={handleChange}></input>
+        </div>
+
+        <div>
+          description:
+          <input value={descr} onChange={handleChangeDescription}></input>
+        </div>
+        <div>
+          link:
+          <input type="url" value={link} onChange={handleChangeLink}></input>
+        </div>
       </div>
     );
   }
@@ -69,49 +85,137 @@ const NodeElements = ({ id, type, label, link, description }) => {
     case "left":
       return (
         <div
+          onContextMenu={(e) => {
+            e.preventDefault();
+            setClicked(true);
+            setPoints({ x: e.pageX, y: e.pageY });
+          }}
           style={{ display: "flex", alignItems: "center" }}
-          onDoubleClick={handleDoubleClick}
         >
           <div style={{ fontSize: "10px", marginRight: "5px", maxWidth: 200 }}>
             {descr}
           </div>
-          { link ? <a href={link} target="_blank">{text}</a> : text}
+          {link ? (
+            <a href={link} target="_blank" rel="noopener noreferrer">
+              {text}
+            </a>
+          ) : (
+            text
+          )}
+          {clicked && (
+            <ContextMenu top={points.y} left={points.x}>
+              <ul>
+                <li onClick={handleEditClick}>Edit</li>
+              </ul>
+            </ContextMenu>
+          )}
         </div>
       );
     case "right":
       return (
         <div
+          onContextMenu={(e) => {
+            e.preventDefault();
+            setClicked(true);
+            setPoints({ x: e.pageX, y: e.pageY });
+          }}
           style={{ display: "flex", alignItems: "center" }}
-          onDoubleClick={handleDoubleClick}
         >
-          { link ? <a href={link} target="_blank">{text}</a> : text}
-          <div style={{ fontSize: "10px", marginLeft: "5px", maxWidth: 200 }}>
+          {link ? (
+            <a href={link} target="_blank" rel="noopener noreferrer">
+              {text}
+            </a>
+          ) : (
+            text
+          )}
+          <div style={{ fontSize: "10px", marginRight: "5px", maxWidth: 200 }}>
             {descr}
           </div>
+          {clicked && (
+            <ContextMenu top={points.y} left={points.x}>
+              <ul>
+                <li onClick={handleEditClick}>Edit</li>
+              </ul>
+            </ContextMenu>
+          )}
         </div>
       );
     case "top":
       return (
         <div
+          onContextMenu={(e) => {
+            e.preventDefault();
+            setClicked(true);
+            setPoints({ x: e.pageX, y: e.pageY });
+          }}
           style={{ display: "center", alignItems: "center" }}
-          onDoubleClick={handleDoubleClick}
         >
           <div style={{ fontSize: "10px", marginBottom: "2px", maxWidth: 175 }}>
             {descr}
           </div>
-          { link ? <a href={link} target="_blank">{text}</a> : text}
+          {link ? (
+            <a href={link} target="_blank" rel="noopener noreferrer">
+              {text}
+            </a>
+          ) : (
+            text
+          )}
+          {clicked && (
+            <ContextMenu top={points.y} left={points.x}>
+              <ul>
+                <li onClick={handleEditClick}>Edit</li>
+              </ul>
+            </ContextMenu>
+          )}
         </div>
       );
     case "bottom":
       return (
         <div
+          onContextMenu={(e) => {
+            e.preventDefault();
+            setClicked(true);
+            setPoints({ x: e.pageX, y: e.pageY });
+          }}
           style={{ display: "center", alignItems: "center" }}
-          onDoubleClick={handleDoubleClick}
         >
-          { link ? <a href={link} target="_blank">{text}</a> : text}
+          {link ? (
+            <a href={link} target="_blank" rel="noopener noreferrer">
+              {text}
+            </a>
+          ) : (
+            text
+          )}
           <div style={{ fontSize: "10px", marginTop: "2px", maxWidth: 175 }}>
             {descr}
           </div>
+          {clicked && (
+            <ContextMenu top={points.y} left={points.x}>
+              <ul>
+                <li onClick={handleEditClick}>Edit</li>
+              </ul>
+            </ContextMenu>
+          )}
+        </div>
+      );
+    case "root":
+      return (
+        <div
+          onContextMenu={(e) => {
+            e.preventDefault();
+            setClicked(true);
+            setPoints({ x: e.pageX, y: e.pageY });
+          }}
+          style={{ display: "center", alignItems: "center" }}
+        >
+            text
+          {clicked && (
+            <ContextMenu top={points.y} left={points.x}>
+              <ul>
+                <li onClick={handleEditClick}>Edit</li>
+              </ul>
+            </ContextMenu>
+          )}
         </div>
       );
   }

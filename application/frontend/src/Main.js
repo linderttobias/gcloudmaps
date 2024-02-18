@@ -4,10 +4,15 @@ import ReactFlow, {
   Controls,
   useStoreApi,
   useReactFlow,
+  useNodesInitialized,
   ReactFlowProvider,
 } from "reactflow";
 import Select from "react-select";
 import "reactflow/dist/style.css";
+
+import AccountDropdown from "./Components/AccountDropdown.js";
+
+import { jwtDecode } from "jwt-decode";
 
 import "./index.css";
 import LightModeButton from "./Components/LightModeButton.js";
@@ -21,11 +26,15 @@ import {
 
 import { shallow } from "zustand/shallow";
 import useStore from "./store";
-import { areaSelector, fetchData } from "./utils.js";
+import { areaSelector, fetchMindMap, fetchList, deleteItem } from "./utils.js";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const selector = (state) => ({
+  mindmapList: state.mindmapList,
+  setMindmapList: state.setMindmapList,
+  service: state.service,
+  setService: state.setService,
   loggedIn: state.loggedIn,
   setLoggedIn: state.setLoggedIn,
   nodes: state.nodes,
@@ -36,6 +45,7 @@ const selector = (state) => ({
   setMindMap: state.setMindMap,
 });
 
+
 const nodeTypes = {
   infoNode_top: NodeTop,
   infoNode_right: NodeRight,
@@ -44,22 +54,16 @@ const nodeTypes = {
   infoNode_main: NodeMain,
 };
 
-localStorage.setItem("service", "bigquery");
 localStorage.setItem("theme", "dark");
 document.documentElement.setAttribute("data-theme", "dark");
 
 const Application = () => {
-
-  const googleServices = [
-    { value: "bigquery", label: "BigQuery" },
-    { value: "cloudstorage", label: "Cloud Storage" },
-    { value: "cloudrun", label: "Cloud Run" },
-    { value: "more-coming-soon", label: "More coming soon ..." },
-  ];
-
-
-
+  
   const {
+    mindmapList,
+    setMindmapList,
+    service,
+    setService,
     loggedIn,
     setLoggedIn,
     nodes,
@@ -70,11 +74,23 @@ const Application = () => {
     setMindMap,
   } = useStore(selector, shallow);
 
-  const [service, setService] = useState("bigquery");
+
+  const [user, setUser] = useState({});
+  const [token, setToken] = useState(null);
   const connectingNodeId = useRef(null);
   const store = useStoreApi();
   const rfInstance = useReactFlow();
   const project = rfInstance.project;
+  const nodesInitialized = useNodesInitialized();
+  const [serviceChanged, setServiceChanged] = useState(false)
+
+
+  useEffect(() => {
+    if (serviceChanged) {
+      rfInstance.fitView();
+      setServiceChanged(false);
+    }
+  }, [nodesInitialized, serviceChanged]);
 
   // we are calculating with positionAbsolute here because child nodes are positioned relative to their parent
   const getChildNodePosition = (event, parentNode) => {
@@ -93,7 +109,7 @@ const Application = () => {
 
     // we need to remove the wrapper bounds, in order to get the correct mouse position
     const panePosition = project({
-      x: event.clientX ,
+      x: event.clientX,
       y: event.clientY,
     });
 
@@ -113,90 +129,166 @@ const Application = () => {
 
   const onConnectEnd = useCallback(
     (event) => {
-      const { nodeInternals } = store.getState();
-      const targetIsPane = event.target.classList.contains("react-flow__pane");
 
-      if (targetIsPane && connectingNodeId.current) {
-        const parentNode = nodeInternals.get(connectingNodeId.current);
-        const childNodePosition = getChildNodePosition(event, parentNode);
-
-        // Indicator where relative to the old coordinates the new coordinates are. Top, right, bottom, left
-        var area = areaSelector(
-          event.clientX,
-          event.clientY,
-          connectingNodeId.oldX,
-          connectingNodeId.oldY
-        );
-
-        if (parentNode && childNodePosition) {
-          addChildNode(
-            parentNode,
-            childNodePosition,
-            "infoNode_" + area,
-            connectingNodeId.handleId
+      if (loggedIn) {
+        const { nodeInternals } = store.getState();
+        const targetIsPane = event.target.classList.contains("react-flow__pane");
+  
+        if (targetIsPane && connectingNodeId.current) {
+          const parentNode = nodeInternals.get(connectingNodeId.current);
+          const childNodePosition = getChildNodePosition(event, parentNode);
+  
+          // Indicator where relative to the old coordinates the new coordinates are. Top, right, bottom, left
+          var area = areaSelector(
+            event.clientX,
+            event.clientY,
+            connectingNodeId.oldX,
+            connectingNodeId.oldY
           );
+  
+          if (parentNode && childNodePosition) {
+            addChildNode(
+              parentNode,
+              childNodePosition,
+              "infoNode_" + area,
+              connectingNodeId.handleId
+            );
+          }
         }
       }
+
     },
     [getChildNodePosition]
   );
 
-  const onSave = useCallback(() => {
+  const onSave = useCallback((token) => {
     if (rfInstance) {
+      
 
-      const url = apiUrl + "/mindmaps/" + localStorage.getItem("service");
+      const getLabelOfRootNode = (nodes) => {
+        const rootNode = nodes.find(node => node.id === "root");
+        return rootNode ? rootNode.data.label : null;
+    };
+    
+      const labelOfRootNode = getLabelOfRootNode(rfInstance.toObject().nodes);
+
+      const url = apiUrl + "/mindmaps/" + labelOfRootNode;
 
       fetch(url, {
         method: "POST",
         body: JSON.stringify(rfInstance.toObject()),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
+          Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => response.json())
-        .then((json) => console.log(json))
         .catch((error) => {
           console.log(error);
         });
     }
+
+
   }, [rfInstance]);
 
-  const handleChange = (selectedItem) => {
-    setService(selectedItem.value);
-    if (selectedItem) {
-      fetchData(selectedItem.value, apiUrl).then((data) => {
+
+
+  useEffect(() => {
+    if (service) {
+      fetchMindMap(service, apiUrl, token).then((data) => {
         setMindMap(data.nodes, data.edges);
+        setServiceChanged(true);
       });
     }
+  }, [service]);
 
-    if (rfInstance) {
-      // Timeout required to wait for nodes/edges being loaded
-      setTimeout(() => {
-        rfInstance.fitView();
-      }, 100);
-    }
-  };  
-
-
-  const init = useCallback(() => {
-    setLoggedIn(false)
-    fetchData(service, apiUrl).then((data) => {
-      setMindMap(data.nodes, data.edges);
+  useEffect(() => {
+    fetchList(apiUrl, token).then((data) => {
+      setMindmapList(data);
+      setService(data[0].value)
     });
-  },);
+    
+  }, [token])
 
 
   const addMindMap = useCallback(() => {
-    setMindMap([
-      {
-        id: 'root',
-        type: 'infoNode_main',
-        data: { label: 'React Flow Mind Map' },
-        position: { x: 0, y: 0 },
-      },
-    ], [])
-  },);
+    setMindMap(
+      [
+        {
+          id: "root",
+          type: "infoNode_main",
+          data: { label: "mainRootNode" },
+          position: { x: 0, y: 0 },
+        },
+      ],
+      []
+    );
+  });
 
+  const handleChange2 = (selectedItem) => {
+    if (selectedItem.value === "logout") {
+      document.getElementById("signInDiv").hidden = false;
+      setToken(null);
+      setLoggedIn(false);
+    }
+
+    if (selectedItem.value === "addnode") {
+      addMindMap();
+    }
+
+    if (selectedItem.value === "savenode") {
+      onSave(token);
+      fetchList(apiUrl, token).then((data) => {
+        setMindmapList(data);
+      });
+    }
+
+    if (selectedItem.value === "deletenode") {
+      deleteItem(apiUrl, token, service)
+    }
+  };
+
+  function handleCallbackResponse(response) {
+    setToken(response.credential);
+    console.log(response.credential);
+    var userObject = jwtDecode(response.credential);
+    setUser(userObject);
+    document.getElementById("signInDiv").hidden = true;
+    fetchList(apiUrl, response.credential).then((data) => {
+      setMindmapList(data);
+    });
+    setLoggedIn(true);
+  }
+  // Initial Load
+  useEffect(() => {
+
+    /* global google */
+    function initializeGoogleSignIn() {
+      if (typeof google !== 'undefined') {
+
+        console.log(google)
+        google.accounts.id.initialize({
+          client_id: "707432047927-ggr2gothraf65v17n16c7048vnj6cf7u.apps.googleusercontent.com",
+          callback: handleCallbackResponse,
+        });
+
+        google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+          theme: "outline",
+          size: "large",
+          zindex: "1",
+          width: 50,
+        });
+      } else {
+        // Wait for 100ms before trying again
+        setTimeout(initializeGoogleSignIn, 100);
+      }
+    }
+    
+    initializeGoogleSignIn();
+
+
+
+  }, []);
 
   return (
     <ReactFlow
@@ -205,26 +297,38 @@ const Application = () => {
       nodeTypes={nodeTypes}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
-      onConnectStart={onConnectStart}
-      onConnectEnd={onConnectEnd}
-      onInit={init}
+      onConnectStart={loggedIn ? onConnectStart : undefined}
+      onConnectEnd={loggedIn ? onConnectEnd : undefined}
       fitView
+      edgesUpdatable={loggedIn}
+      edgesFocusable={loggedIn}
+      nodesDraggable={loggedIn}
+      nodesConnectable={loggedIn}
+
+
     >
       <Background color="#818cab" size="0.8" variant="dots" />
-      <Controls />
+      <Controls showInteractive={false} />
       <div className="container">
         <div className="component">
           gcloudmaps<sup class="superscript">by Tobias Lindert</sup>
         </div>
-        { loggedIn ? ( <div className="about"><div id="1" class="info-button" onClick={addMindMap}>Add MindMap</div></div>) : null}
+        <div style={{ zIndex: 5, display: "flex", alignItems: "center" }}>
+          <div id="signInDiv"></div>
+          {token && (
+            <div>
+              <AccountDropdown user={user} handleChange2={handleChange2} />
+            </div>
+          )}
+        </div>
         <div className="scrollbar">
           <Select
             className="my-react-select-container"
             classNamePrefix="my-react-select"
-            defaultValue={googleServices[0]}
+            defaultValue={mindmapList[0]}
             menuPlacement="auto"
-            options={googleServices}
-            onChange={handleChange}
+            options={mindmapList}
+            onChange={e => setService(e.value)}
             isSearchable={false}
             styles={{
               control: (baseStyles, state) => ({
@@ -234,7 +338,7 @@ const Application = () => {
                 boxShadow: "rgba(100, 100, 111, 0.2) 0px 5px 20px 0px",
                 height: "35px",
                 transition: "0s",
-                marginLeft: "8px"
+                marginLeft: "8px",
               }),
             }}
           />

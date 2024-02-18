@@ -1,0 +1,48 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  annotations:
+    run.googleapis.com/ingress: all
+    run.googleapis.com/ingress-status: all
+  labels:
+    cloud.googleapis.com/location: europe-west1
+    commit-sha: 69d9d13c72f92d6d80ad21cbb620ab6db3a1b301
+    managed-by: github-actions
+  name: gcloudmaps-backend-test
+  namespace: '707432047927'
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: '1'
+        run.googleapis.com/client-name: gcloud
+        run.googleapis.com/client-version: 462.0.1
+        run.googleapis.com/startup-cpu-boost: 'true'
+      labels:
+        client.knative.dev/nonce: uvujxbdqbn
+        commit-sha: 69d9d13c72f92d6d80ad21cbb620ab6db3a1b301
+        managed-by: github-actions
+        run.googleapis.com/startupProbeType: Default
+    spec:
+      containerConcurrency: 80
+      containers:
+      - image: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend_go
+        name: backend-1
+        ports:
+        - containerPort: 3001
+          name: http1
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+        startupProbe:
+          failureThreshold: 1
+          periodSeconds: 240
+          tcpSocket:
+            port: 3001
+          timeoutSeconds: 240
+      serviceAccountName: gcloudmaps-cloudrun-umsa@gcloudmaps.iam.gserviceaccount.com
+      timeoutSeconds: 300
+  traffic:
+  - latestRevision: true
+    percent: 100

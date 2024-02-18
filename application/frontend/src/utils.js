@@ -1,9 +1,56 @@
-function fetchData(service, urli) {
+function fetchMindMap(service, urli, authToken) {
   const url = urli + "/mindmaps/" + service;
-  console.log(url)
-  return fetch(url)
+
+  const headers = new Headers();
+
+  // Add the authorization header if the auth token is not null or empty
+  if (authToken) {
+      headers.append("Authorization", `Bearer ${authToken}`);
+  }
+
+  return fetch(url, { headers })
     .then((response) => response.json())
     .catch((error) => console.error(error));
+}
+
+
+function fetchList(urli, authToken) {
+  const url = urli + "/list";
+
+  const headers = new Headers();
+
+  // Add the authorization header if the auth token is not null or empty
+  if (authToken) {
+      headers.append("Authorization", `Bearer ${authToken}`);
+  }
+
+  return fetch(url, { headers })
+    .then((response) => response.json())
+    .then(data => {
+      return data.map(item => ({ value: item, label: item }));
+    })
+    .catch((error) => console.error(error));
+}
+
+function deleteItem(urli, authToken, itemId) {
+  const url = `${urli}/mindmaps/${itemId}`; // Assuming the item to be deleted is specified by itemId
+
+  const headers = {
+    Authorization: `Bearer ${authToken}`,
+    // Add other headers if needed
+  };
+
+  return fetch(url, { 
+    method: 'DELETE', 
+    headers 
+  })
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .catch((error) => console.error(error));
 }
 
 function areaSelector(newX, newY, oldX, oldY) {
@@ -42,4 +89,4 @@ function isBelowDiagonalLine(pointX, pointY, oldX, oldY, slope, def = 2) {
   }
 }
 
-export { areaSelector, fetchData };
+export { areaSelector, fetchMindMap, fetchList, deleteItem };

@@ -39,14 +39,30 @@ resource "google_compute_url_map" "default" {
 
   default_service = google_compute_backend_service.default.id
 
+  host_rule {
+    hosts = [
+      "dev.gcloudmaps.com",
+    ]
+    path_mather = "dev"
+  }
 
   host_rule {
-    hosts        = ["*"]
-    path_matcher = "allpaths"
+    hosts        = ["gcloudmaps.com"]
+    path_matcher = "main"
+  }
+
+    path_matcher {
+    name            = "dev"
+    default_service = google_compute_backend_service.default.self_link
+
+    path_rule {
+      paths   = ["/api/*"]
+      service = google_compute_backend_service.api.self_link
+    }
   }
 
   path_matcher {
-    name            = "allpaths"
+    name            = "main"
     default_service = google_compute_backend_service.default.self_link
 
     path_rule {
