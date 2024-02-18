@@ -1,0 +1,20 @@
+name: Container Deployment - Build, Push to Artifact Registry and Cloud Run Deployment
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'application/frontend/**'
+      - '.github/workflows/frontend-production.yaml'
+
+jobs:
+  tf-plan-software-prod:
+    uses: linderttobias/gcloudmaps/.github/workflows/template-deployment.yaml@main
+    with:
+      application: frontend
+      environment: production
+      runner: ubuntu-latest
+
+    secrets:
+      WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
+      GCP_USMA_TF_PLAN_APPLY: ${{ secrets.GCP_USMA_DEPLOYMENT }}
