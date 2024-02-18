@@ -24,7 +24,7 @@ jobs:
       - id: 'plannerAuth'
         if: github.ref != 'refs/heads/main'
         name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v1.0.0'
+        uses: 'google-github-actions/auth@v2.1.1'
         with:
           workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
           service_account: '${{ secrets.GCP_USMA_TF_PLAN }}'
@@ -32,14 +32,14 @@ jobs:
       - id: 'applierAuth'
         if: github.ref == 'refs/heads/main'
         name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v1.0.0'
+        uses: 'google-github-actions/auth@v2.1.1'
         with:
           workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
           service_account: '${{ secrets.GCP_USMA_TF_APPLY }}'
 
-      - uses: hashicorp/setup-terraform@v1
+      - uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.4.5
+          terraform_version: 1.7.1
 
       - id: fmt
         name: Terraform fmt
