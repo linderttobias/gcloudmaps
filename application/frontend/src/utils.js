@@ -26,6 +26,9 @@ function fetchList(urli, authToken) {
 
   return fetch(url, { headers })
     .then((response) => response.json())
+    .then(data => {
+      return data.map(item => ({ value: item, label: item }));
+    })
     .catch((error) => console.error(error));
 }
 

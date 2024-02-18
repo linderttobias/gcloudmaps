@@ -250,6 +250,7 @@ const Application = () => {
 
   function handleCallbackResponse(response) {
     setToken(response.credential);
+    console.log(response.credential);
     var userObject = jwtDecode(response.credential);
     setUser(userObject);
     document.getElementById("signInDiv").hidden = true;

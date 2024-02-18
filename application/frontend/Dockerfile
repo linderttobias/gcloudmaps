@@ -2,7 +2,7 @@
 FROM node:18.15.0-alpine as build
 
 ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL=${REACT_APP_API_URL}
+ENV REACT_APP_API_URL="https://gcloudmaps-backend-test-osv4zrdlyq-ew.a.run.app"
 ENV REACT_APP_ENV = "PROD"
 
 WORKDIR /app
