@@ -48,7 +48,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: europe-west1-docker.pkg.dev/gcloudmaps/${{ inputs.environment }}/${{ inputs.applicaton }}:${{ github.sha }}
+          tags: europe-west1-docker.pkg.dev/gcloudmaps/${{ inputs.environment }}/${{ inputs.application }}:${{ github.sha }}
           context: application/${{ inputs.application }}
 
   deploy-to-cloudrun:
