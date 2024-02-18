@@ -54,14 +54,6 @@ jobs:
           context: application/${{ inputs.application }}
           build-args: REACT_APP_API_URL=${{ inputs.backend-url }}
 
-      - name: Build and push Docker image - No Tags
-        uses: docker/build-push-action@v5
-        with:
-          push: true
-          tags: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/${{ inputs.application }}-${{ inputs.environment }}
-          context: application/${{ inputs.application }}
-
-
   deploy-to-cloudrun:
     permissions:
       contents: 'read' # Required to Checkout Repo 
