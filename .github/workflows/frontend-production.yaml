@@ -15,7 +15,7 @@ jobs:
       application: frontend
       environment: production
       runner: ubuntu-latest
-      backend-url: api.gcloudmaps.com
+      backend-url: https://api.gcloudmaps.com
 
     secrets:
       WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
