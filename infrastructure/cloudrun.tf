@@ -8,10 +8,14 @@ resource "google_artifact_registry_repository" "gcloudmaps" {
 
 
 
-resource "google_cloud_run_v2_service" "frontend" {
-  name     = "gcloudmaps-frontend"
+resource "google_cloud_run_v2_service" "frontend-production" {
+  name     = "gcloudmaps-frontend-production"
   location = var.region
-  ingress  = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
+  ingress  = "INGRESS_TRAFFIC_ALL"
+
+  lifecycle {
+    ignore_changes = [template[0].containers[0].image]
+  }
 
 
   template {
@@ -26,7 +30,7 @@ resource "google_cloud_run_v2_service" "frontend" {
     service_account = google_service_account.umsa-cloudrun.email
 
     containers {
-      image = "europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/frontend"
+      image = "europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/frontend-production"
       ports {
         container_port = 3000
       }
@@ -35,10 +39,14 @@ resource "google_cloud_run_v2_service" "frontend" {
 
 }
 
-resource "google_cloud_run_v2_service" "backend" {
-  name     = "gcloudmaps-backend"
+resource "google_cloud_run_v2_service" "backend-production" {
+  name     = "gcloudmaps-backend-production"
   location = var.region
-  ingress  = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
+  ingress  = "INGRESS_TRAFFIC_ALL"
+
+  lifecycle {
+    ignore_changes = [template[0].containers[0].image]
+  }
 
 
   template {
@@ -53,7 +61,7 @@ resource "google_cloud_run_v2_service" "backend" {
     service_account = google_service_account.umsa-cloudrun.email
 
     containers {
-      image = "europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend"
+      image = "europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend-production"
       ports {
         container_port = 3001
       }
@@ -63,10 +71,14 @@ resource "google_cloud_run_v2_service" "backend" {
 }
 
 
-resource "google_cloud_run_v2_service" "frontend-test" {
-  name     = "gcloudmaps-frontend-test"
+resource "google_cloud_run_v2_service" "frontend-development" {
+  name     = "gcloudmaps-frontend-development"
   location = var.region
   ingress  = "INGRESS_TRAFFIC_ALL"
+
+  lifecycle {
+    ignore_changes = [template[0].containers[0].image]
+  }
 
 
   template {
@@ -81,7 +93,7 @@ resource "google_cloud_run_v2_service" "frontend-test" {
     service_account = google_service_account.umsa-cloudrun.email
 
     containers {
-      image = "europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/frontend"
+      image = "europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/frontend-development"
       ports {
         container_port = 3000
       }
@@ -95,10 +107,14 @@ resource "google_cloud_run_v2_service" "frontend-test" {
 
 }
 
-resource "google_cloud_run_v2_service" "backend-test" {
-  name     = "gcloudmaps-backend-test"
+resource "google_cloud_run_v2_service" "backend-development" {
+  name     = "gcloudmaps-backend-development"
   location = var.region
   ingress  = "INGRESS_TRAFFIC_ALL"
+
+  lifecycle {
+    ignore_changes = [template[0].containers[0].image]
+  }
 
 
   template {
@@ -113,7 +129,7 @@ resource "google_cloud_run_v2_service" "backend-test" {
     service_account = google_service_account.umsa-cloudrun.email
 
     containers {
-      image = "europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend"
+      image = "europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/backend-development"
       ports {
         container_port = 3001
       }

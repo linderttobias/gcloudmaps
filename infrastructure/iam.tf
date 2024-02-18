@@ -20,9 +20,9 @@ resource "google_service_account" "umsa-tf-apply" {
   description = "Service Account for Terraform Apply on GitHub Actions"
 }
 
-resource "google_cloud_run_service_iam_binding" "default" {
-  location = google_cloud_run_v2_service.frontend.location
-  service  = google_cloud_run_v2_service.frontend.name
+resource "google_cloud_run_service_iam_binding" "frontend-production" {
+  location = google_cloud_run_v2_service.frontend-production.location
+  service  = google_cloud_run_v2_service.frontend-production.name
   role     = "roles/run.invoker"
   members = [
     "allUsers"
@@ -30,9 +30,28 @@ resource "google_cloud_run_service_iam_binding" "default" {
 }
 
 
-resource "google_cloud_run_service_iam_binding" "backend" {
-  location = google_cloud_run_v2_service.backend.location
-  service  = google_cloud_run_v2_service.backend.name
+resource "google_cloud_run_service_iam_binding" "backend-production" {
+  location = google_cloud_run_v2_service.backend-production.location
+  service  = google_cloud_run_v2_service.backend-production.name
+  role     = "roles/run.invoker"
+  members = [
+    "allUsers"
+  ]
+}
+
+resource "google_cloud_run_service_iam_binding" "frontend-development" {
+  location = google_cloud_run_v2_service.frontend-development.location
+  service  = google_cloud_run_v2_service.frontend-development.name
+  role     = "roles/run.invoker"
+  members = [
+    "allUsers"
+  ]
+}
+
+
+resource "google_cloud_run_service_iam_binding" "backend-development" {
+  location = google_cloud_run_v2_service.backend-development.location
+  service  = google_cloud_run_v2_service.backend-development.name
   role     = "roles/run.invoker"
   members = [
     "allUsers"
@@ -68,7 +87,7 @@ resource "google_artifact_registry_repository_iam_member" "member-cloudbuild" {
 resource "google_cloud_run_service_iam_member" "member-frontend" {
   location = var.region
   project  = var.project
-  service  = google_cloud_run_v2_service.frontend.name
+  service  = google_cloud_run_v2_service.frontend-production.name
   role     = "roles/run.admin"
   member   = "serviceAccount:${google_service_account.umsa-deployment.email}"
 }
@@ -76,25 +95,25 @@ resource "google_cloud_run_service_iam_member" "member-frontend" {
 resource "google_cloud_run_service_iam_member" "member-backend" {
   location = var.region
   project  = var.project
-  service  = google_cloud_run_v2_service.backend.name
+  service  = google_cloud_run_v2_service.backend-production.name
   role     = "roles/run.admin"
   member   = "serviceAccount:${google_service_account.umsa-deployment.email}"
 }
 
 
 
-resource "google_cloud_run_service_iam_member" "member-frontend-test" {
+resource "google_cloud_run_service_iam_member" "member-frontend-development" {
   location = var.region
   project  = var.project
-  service  = google_cloud_run_v2_service.frontend-test.name
+  service  = google_cloud_run_v2_service.frontend-development.name
   role     = "roles/run.admin"
   member   = "serviceAccount:${google_service_account.umsa-deployment.email}"
 }
 
-resource "google_cloud_run_service_iam_member" "member-backend-test" {
+resource "google_cloud_run_service_iam_member" "member-backend-development" {
   location = var.region
   project  = var.project
-  service  = google_cloud_run_v2_service.backend-test.name
+  service  = google_cloud_run_v2_service.backend-development.name
   role     = "roles/run.admin"
   member   = "serviceAccount:${google_service_account.umsa-deployment.email}"
 }

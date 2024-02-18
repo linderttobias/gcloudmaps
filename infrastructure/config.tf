@@ -1,6 +1,6 @@
 
 terraform {
-  required_version = "= 1.4.5"
+  required_version = "= 1.7.1"
 
   backend "gcs" {
     bucket = "gcloudmaps-terraform-state"
