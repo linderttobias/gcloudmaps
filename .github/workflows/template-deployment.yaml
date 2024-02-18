@@ -30,10 +30,10 @@ jobs:
     runs-on: ${{ inputs.runner }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Authenticate to Google Cloud
-        uses: 'google-github-actions/auth@v1.0.0'
+        uses: 'google-github-actions/auth@v2.1.1'
         with:
           workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
           service_account: ${{ secrets.GCP_USMA_TF_PLAN_APPLY }}
@@ -69,6 +69,12 @@ jobs:
     runs-on: ${{ inputs.runner }}
     needs: [build-push]
     steps:
+      - name: Authenticate to Google Cloud
+        uses: 'google-github-actions/auth@v2.1.1'
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_USMA_TF_PLAN_APPLY }}
+          
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
