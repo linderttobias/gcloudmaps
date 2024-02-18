@@ -14,6 +14,7 @@ jobs:
       application: frontend
       environment: development
       runner: ubuntu-latest
+      backend-url: https://gcloudmaps-backend-development-osv4zrdlyq-ew.a.run.app
 
     secrets:
       WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}

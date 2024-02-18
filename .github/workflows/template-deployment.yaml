@@ -12,6 +12,8 @@ on:
       environment:
         required: true
         type: string #Its either production or development
+      backend-url:
+        type: string
     secrets:
       # Workload Identity Federation Provider
       WIF_PROVIDER:
@@ -50,6 +52,7 @@ jobs:
           push: true
           tags: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/${{ inputs.application }}-${{ inputs.environment }}:${{ github.sha }}
           context: application/${{ inputs.application }}
+          build-args: REACT_APP_API_URL=${{ inputs.backend-url }}
 
       - name: Build and push Docker image - No Tags
         uses: docker/build-push-action@v5
@@ -57,6 +60,7 @@ jobs:
           push: true
           tags: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/${{ inputs.application }}-${{ inputs.environment }}
           context: application/${{ inputs.application }}
+
 
   deploy-to-cloudrun:
     permissions:
