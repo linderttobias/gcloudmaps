@@ -44,11 +44,18 @@ jobs:
       - name: Configure Docker for GCP
         run: gcloud auth configure-docker europe-west1-docker.pkg.dev
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image - SHA Tag
         uses: docker/build-push-action@v5
         with:
           push: true
           tags: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/${{ inputs.application }}-${{ inputs.environment }}:${{ github.sha }}
+          context: application/${{ inputs.application }}
+
+      - name: Build and push Docker image - No Tags
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/${{ inputs.application }}-${{ inputs.environment }}
           context: application/${{ inputs.application }}
 
   deploy-to-cloudrun:
@@ -64,3 +71,4 @@ jobs:
           image: europe-west1-docker.pkg.dev/gcloudmaps/gcloudmaps/${{ inputs.application }}-${{ inputs.environment }}:${{ github.sha }}
           service: gcloudmaps-${{ inputs.application }}-${{ inputs.environment }}
           region: europe-west1
+      
