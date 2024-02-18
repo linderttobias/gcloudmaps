@@ -8,7 +8,7 @@ on:
       - '.github/workflows/backend-production.yaml'
 
 jobs:
-  tf-plan-software-prod:
+  backend-prod-build-push-deploy:
     uses: linderttobias/gcloudmaps/.github/workflows/template-deployment.yaml@main
     with:
       application: backend

@@ -26,12 +26,6 @@ jobs:
       contents: 'read' # Required to Checkout Repo 
       id-token: 'write' # Required for Workload Identity Federation
     runs-on: ${{ inputs.runner }}
-    defaults:
-      run:
-        working-directory: ${{ inputs.working-directory }}
-    outputs:
-      # The output is obtained by setting terraform_wrapper to true
-      tfplanExitCode: ${{ steps.terraform_plan.outputs.exitcode  }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -55,6 +49,7 @@ jobs:
         with:
           push: true
           tags: europe-west1-docker.pkg.dev/gcloudmaps/${{ inputs.environment }}/${{ inputs.applicaton }}:${{ github.sha }}
+          context: application/${{ inputs.application }}
 
   deploy-to-cloudrun:
     permissions:
@@ -62,9 +57,6 @@ jobs:
       id-token: 'write' # Required for Workload Identity Federation
     runs-on: ${{ inputs.runner }}
     needs: [build-push]
-    defaults:
-      run:
-        working-directory: ${{ inputs.working-directory }}
     steps:
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
