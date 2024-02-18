@@ -8,13 +8,13 @@ on:
       - '.github/workflows/frontend-production.yaml'
 
 jobs:
-  tf-plan-software-prod:
+  frontend-prod-build-push-deploy:
     uses: linderttobias/gcloudmaps/.github/workflows/template-deployment.yaml@main
     with:
       application: frontend
       environment: production
       runner: ubuntu-latest
-
+      
     secrets:
       WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
       GCP_USMA_TF_PLAN_APPLY: ${{ secrets.GCP_USMA_DEPLOYMENT }}
