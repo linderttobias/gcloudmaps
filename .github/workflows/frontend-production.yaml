@@ -1,4 +1,4 @@
-name: Container Deployment - Build, Push to Artifact Registry and Cloud Run Deployment
+name: Frontend/Production - Build, Push, Deploy
 
 on:
   push:
