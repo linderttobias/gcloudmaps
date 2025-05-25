@@ -10,10 +10,6 @@ import ReactFlow, {
 import Select from "react-select";
 import "reactflow/dist/style.css";
 
-import AccountDropdown from "./Components/AccountDropdown.js";
-
-import { jwtDecode } from "jwt-decode";
-
 import "./index.css";
 import LightModeButton from "./Components/LightModeButton.js";
 import {
@@ -35,8 +31,6 @@ const selector = (state) => ({
   setMindmapList: state.setMindmapList,
   service: state.service,
   setService: state.setService,
-  loggedIn: state.loggedIn,
-  setLoggedIn: state.setLoggedIn,
   nodes: state.nodes,
   edges: state.edges,
   onNodesChange: state.onNodesChange,
@@ -64,8 +58,6 @@ const Application = () => {
     setMindmapList,
     service,
     setService,
-    loggedIn,
-    setLoggedIn,
     nodes,
     edges,
     onNodesChange,
@@ -75,8 +67,6 @@ const Application = () => {
   } = useStore(selector, shallow);
 
 
-  const [user, setUser] = useState({});
-  const [token, setToken] = useState(null);
   const connectingNodeId = useRef(null);
   const store = useStoreApi();
   const rfInstance = useReactFlow();
@@ -129,41 +119,36 @@ const Application = () => {
 
   const onConnectEnd = useCallback(
     (event) => {
+      const { nodeInternals } = store.getState();
+      const targetIsPane = event.target.classList.contains("react-flow__pane");
 
-      if (loggedIn) {
-        const { nodeInternals } = store.getState();
-        const targetIsPane = event.target.classList.contains("react-flow__pane");
-  
-        if (targetIsPane && connectingNodeId.current) {
-          const parentNode = nodeInternals.get(connectingNodeId.current);
-          const childNodePosition = getChildNodePosition(event, parentNode);
-  
-          // Indicator where relative to the old coordinates the new coordinates are. Top, right, bottom, left
-          var area = areaSelector(
-            event.clientX,
-            event.clientY,
-            connectingNodeId.oldX,
-            connectingNodeId.oldY
+      if (targetIsPane && connectingNodeId.current) {
+        const parentNode = nodeInternals.get(connectingNodeId.current);
+        const childNodePosition = getChildNodePosition(event, parentNode);
+
+        // Indicator where relative to the old coordinates the new coordinates are. Top, right, bottom, left
+        var area = areaSelector(
+          event.clientX,
+          event.clientY,
+          connectingNodeId.oldX,
+          connectingNodeId.oldY
+        );
+
+        if (parentNode && childNodePosition) {
+          addChildNode(
+            parentNode,
+            childNodePosition,
+            "infoNode_" + area,
+            connectingNodeId.handleId
           );
-  
-          if (parentNode && childNodePosition) {
-            addChildNode(
-              parentNode,
-              childNodePosition,
-              "infoNode_" + area,
-              connectingNodeId.handleId
-            );
-          }
         }
       }
-
     },
     [getChildNodePosition]
   );
 
-  const onSave = useCallback((token) => {
+  const onSave = useCallback(() => {
     if (rfInstance) {
-      
 
       const getLabelOfRootNode = (nodes) => {
         const rootNode = nodes.find(node => node.id === "root");
@@ -179,7 +164,6 @@ const Application = () => {
         body: JSON.stringify(rfInstance.toObject()),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
-          Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => response.json())
@@ -195,7 +179,7 @@ const Application = () => {
 
   useEffect(() => {
     if (service) {
-      fetchMindMap(service, apiUrl, token).then((data) => {
+      fetchMindMap(service, apiUrl).then((data) => {
         setMindMap(data.nodes, data.edges);
         setServiceChanged(true);
       });
@@ -203,12 +187,12 @@ const Application = () => {
   }, [service]);
 
   useEffect(() => {
-    fetchList(apiUrl, token).then((data) => {
+    fetchList(apiUrl).then((data) => {
       setMindmapList(data);
       setService(data[0].value)
     });
     
-  }, [token])
+  }, [])
 
 
   const addMindMap = useCallback(() => {
@@ -226,69 +210,21 @@ const Application = () => {
   });
 
   const handleChange2 = (selectedItem) => {
-    if (selectedItem.value === "logout") {
-      document.getElementById("signInDiv").hidden = false;
-      setToken(null);
-      setLoggedIn(false);
-    }
-
     if (selectedItem.value === "addnode") {
       addMindMap();
     }
 
     if (selectedItem.value === "savenode") {
-      onSave(token);
-      fetchList(apiUrl, token).then((data) => {
+      onSave();
+      fetchList(apiUrl).then((data) => {
         setMindmapList(data);
       });
     }
 
     if (selectedItem.value === "deletenode") {
-      deleteItem(apiUrl, token, service)
+      deleteItem(apiUrl, service)
     }
   };
-
-  function handleCallbackResponse(response) {
-    setToken(response.credential);
-    console.log(response.credential);
-    var userObject = jwtDecode(response.credential);
-    setUser(userObject);
-    document.getElementById("signInDiv").hidden = true;
-    fetchList(apiUrl, response.credential).then((data) => {
-      setMindmapList(data);
-    });
-    setLoggedIn(true);
-  }
-  // Initial Load
-  useEffect(() => {
-
-    /* global google */
-    function initializeGoogleSignIn() {
-      if (typeof google !== 'undefined') {
-
-        console.log(google)
-        google.accounts.id.initialize({
-          client_id: "707432047927-ggr2gothraf65v17n16c7048vnj6cf7u.apps.googleusercontent.com",
-          callback: handleCallbackResponse,
-        });
-
-        google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-          theme: "outline",
-          size: "large",
-          zindex: "1",
-          width: 50,
-        });
-      } else {
-        // Wait for 100ms before trying again
-        setTimeout(initializeGoogleSignIn, 100);
-      }
-    }
-    
-    initializeGoogleSignIn();
-
-
-
-  }, []);
 
   return (
     <ReactFlow
@@ -297,13 +233,13 @@ const Application = () => {
       nodeTypes={nodeTypes}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
-      onConnectStart={loggedIn ? onConnectStart : undefined}
-      onConnectEnd={loggedIn ? onConnectEnd : undefined}
+      onConnectStart={onConnectStart}
+      onConnectEnd={onConnectEnd}
       fitView
-      edgesUpdatable={loggedIn}
-      edgesFocusable={loggedIn}
-      nodesDraggable={loggedIn}
-      nodesConnectable={loggedIn}
+      edgesUpdatable={true}
+      edgesFocusable={true}
+      nodesDraggable={true}
+      nodesConnectable={true}
 
 
     >
@@ -314,12 +250,6 @@ const Application = () => {
           gcloudmaps<sup class="superscript">by Tobias Lindert</sup>
         </div>
         <div style={{ zIndex: 5, display: "flex", alignItems: "center" }}>
-          <div id="signInDiv"></div>
-          {token && (
-            <div>
-              <AccountDropdown user={user} handleChange2={handleChange2} />
-            </div>
-          )}
         </div>
         <div className="scrollbar">
           <Select

@@ -15,12 +15,6 @@ const useStore = create((set, get) => ({
       service: value
     });
   },
-  loggedIn: false,
-  setLoggedIn: ( isLoggedIn ) => {
-    set({
-      loggedIn: isLoggedIn
-    });
-  },
   nodes: [],
   edges: [],
   setMindMap: (node, edge) => {
