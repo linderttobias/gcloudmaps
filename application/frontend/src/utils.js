@@ -1,42 +1,30 @@
-function fetchMindMap(service, urli, authToken) {
+function fetchMindMap(service, urli) {
   const url = urli + "/mindmaps/" + service;
 
   const headers = new Headers();
 
-  // Add the authorization header if the auth token is not null or empty
-  if (authToken) {
-      headers.append("Authorization", `Bearer ${authToken}`);
-  }
-
   return fetch(url, { headers })
     .then((response) => response.json())
     .catch((error) => console.error(error));
 }
 
 
-function fetchList(urli, authToken) {
+function fetchList(urli) {
   const url = urli + "/list";
-
   const headers = new Headers();
-
-  // Add the authorization header if the auth token is not null or empty
-  if (authToken) {
-      headers.append("Authorization", `Bearer ${authToken}`);
-  }
 
   return fetch(url, { headers })
     .then((response) => response.json())
     .then(data => {
-      return data.map(item => ({ value: item, label: item }));
+      return data.map(item => ({ value: item.value, label: item.label }));
     })
     .catch((error) => console.error(error));
 }
 
-function deleteItem(urli, authToken, itemId) {
+function deleteItem(urli, itemId) {
   const url = `${urli}/mindmaps/${itemId}`; // Assuming the item to be deleted is specified by itemId
 
   const headers = {
-    Authorization: `Bearer ${authToken}`,
     // Add other headers if needed
   };
 
