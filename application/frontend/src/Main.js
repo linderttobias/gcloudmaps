@@ -187,6 +187,7 @@ const Application = () => {
   }, [service]);
 
   useEffect(() => {
+    console.log(apiUrl);
     fetchList(apiUrl).then((data) => {
       setMindmapList(data);
       setService(data[0].value)

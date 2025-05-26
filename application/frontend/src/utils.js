@@ -11,13 +11,12 @@ function fetchMindMap(service, urli) {
 
 function fetchList(urli) {
   const url = urli + "/list";
-
   const headers = new Headers();
 
   return fetch(url, { headers })
     .then((response) => response.json())
     .then(data => {
-      return data.map(item => ({ value: item, label: item }));
+      return data.map(item => ({ value: item.value, label: item.label }));
     })
     .catch((error) => console.error(error));
 }
