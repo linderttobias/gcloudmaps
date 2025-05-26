@@ -1,41 +1,12 @@
-## Gcloudmaps Application (React + NodeJs)
+# Gcloudmaps Application
 
-React:  
-`cd frontend && npm run start  
+This directory contains the source code for the gcloudmaps.com application, which is comprised of a frontend and a backend component.
 
-NodeJs:  
-`node ./backend/server.js 
+## Overview
 
-## Installation
+*   **Frontend:** A React-based application responsible for the user interface and interactive mind map. For detailed information on the frontend, including setup, development, and building, please see the [frontend README](./frontend/README.MD).
+*   **Backend:** A Python Flask application that provides data and APIs for the frontend. For detailed information on the backend, including setup, development, and deployment, please see the [backend README](./backend/README.MD).
 
-### Prepare Environment
+## Getting Started
 
-```shell
-sudo apt-get update
-curl -fsSl https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
-sudo apt install npm
-```
-
-Test
-
-```shell
-node -v should be 18.XX
-npm -v should be 9.XX
-```
-
-### Set-up Applications
-
-```shell
-cd frontend & npm install
-cd backend & npm install
-```
-
-
-#### Docker
-
-```shell
-docker build -t react-node
-docker tag react-node europe-west1-docker.pkg.dev/gcloudmaps/container/app
-docker push europe-west1-docker.pkg.dev/gcloudmaps/container/app
-```
+To get started with developing or running a specific part of the application, please refer to the respective README files linked above. General project information, contribution guidelines, and overall architecture can be found in the main repository README file.

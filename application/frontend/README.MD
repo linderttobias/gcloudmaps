@@ -1,62 +1,53 @@
-## About
+## Frontend Application (React)
 
+This directory contains the React-based frontend application for gcloudmaps.com. It provides the user interface for browsing and interacting with the Google Cloud services mind map.
 
-### Features
+### Key Features & Libraries
 
-
-## Installation 
-
-```bash
-pyenv virtualenv 3.11.1 contentapi
-pyenv local contentapi
-
-pip install -r requirements.txt
-```
-
-
-
-## Usage
-
-### Authorization
-
-The application uses Google Cloud SDK and requires credentials to be set to run successfull. One method to do so is by invoking:
-
-`gcloud auth application-default login`
-
-Set Project for Firestore if different from Cloud Run Env:
-`gcloud config set project <YOURPROJECT>`
+*   **Interactive Mind Map:** Built with React Flow to display and navigate the Google Cloud services.
+*   **State Management:** Uses Redux for managing application state.
+*   **Styling:** Styled with standard CSS and potentially CSS-in-JS solutions if present.
 
 ### Local Development
 
-`pyenv local contentapi`
+To run the frontend application locally for development:
 
-You can start the application either in development mode with flask
-or test it with the gunicorn server:
+1.  **Navigate to the frontend directory:**
+    ```bash
+    cd application/frontend
+    ```
+2.  **Install dependencies:**
+    If you haven't already, install the necessary Node.js packages.
+    ```bash
+    npm install
+    ```
+3.  **Start the development server:**
+    ```bash
+    npm run start
+    ```
+    This will typically open the application in your default web browser at `http://localhost:3000`. The server will automatically reload when you make changes to the code.
 
+### Building the Frontend
 
-`flask run --port 3001`  
- or  
-`gunicorn --bind :3001 --workers 1 --threads 8 --timeout 0 --log-level=debug app:app`
+To create a production build of the frontend:
 
+1.  **Navigate to the frontend directory:**
+    ```bash
+    cd application/frontend
+    ```
+2.  **Run the build script:**
+    ```bash
+    npm run build
+    ```
+    This command will generate a `build` directory containing the optimized static assets for the frontend. These assets are then served by the web server (e.g., Nginx) as defined in `nginx.conf` and the `Dockerfile`.
 
-### Containerization & Cloud Run
+### Dockerization
 
-Build and push to Artifact Registry:
+The frontend application is containerized using Docker. The `Dockerfile` and `nginx.conf` in this directory are used to build the frontend image and serve its static content.
+
+To build the Docker image locally (example):
 ```bash
-docker build -t contentapi .
-docker tag contentapi <YOUR-REGISTRY>/backend:<YOURTAG>
-docker push <YOUR-REGISTRY>/backend:<YOURTAG>
+docker build -t gcloudmaps-frontend .
 ```
 
-Deploy new Cloud Run Revision:
-
-```bash
-gcloud run services list
-gcloud run services describe <YOUR-SERVICE> --format export > service.yaml
-```
-
-Now update you Service (Adjust imgage tag etc ..) and deploy:
-```bash
-gcloud run services replace service.yaml
-```
-
+This image is then pushed to a container registry (like Google Artifact Registry) as part of the CI/CD pipeline.

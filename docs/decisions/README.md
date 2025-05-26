@@ -1,12 +1,12 @@
-# Decision Log
+# Architectural Decision Log
 
-In this project I capture important decisions with [architectural decision records](https://adr.github.io/),
-based on the [Emblem Given Project](https://github.com/GoogleCloudPlatform/emblem)
+This project uses [Architectural Decision Records (ADRs)](https://adr.github.io/) to document important architectural decisions. This approach is inspired by practices like those in the [Emblem Given Project](https://github.com/GoogleCloudPlatform/emblem).
 
-These records provide context, trade-offs, and reasoning taken at our community & technical cross-roads. My goal is to preserve the understanding of how the project has grown, and capture enough insight to effectively revisit previous decisions.
+ADRs provide context, outline trade-offs, and explain the reasoning behind key technical choices. The goal is to preserve the understanding of how the project evolves and to capture insights that allow for effective revisiting of previous decisions.
 
-Get started created a new decision record with the template:
+To create a new decision record, use the provided template:
 
 ```sh
-cp template.md YYYY-MM-title-with-dashes.md
+cp template.md YYYY-MM-DD-title-with-dashes.md
 ```
+(Please use `YYYY-MM-DD` format for the date in the filename.)
