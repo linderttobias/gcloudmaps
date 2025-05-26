@@ -11,7 +11,7 @@ import os
 import logging
 from flask import Flask, request
 from flask_cors import CORS
-from application.backend import firestore  # Handles Firestore database interactions
+import firestore  # Handles Firestore database interactions
 
 # Initialize Flask app
 app = Flask(__name__)
